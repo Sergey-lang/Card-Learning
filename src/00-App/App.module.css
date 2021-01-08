@@ -1,0 +1,39 @@
+.app {
+
+}
+
+.mainNav {
+    margin: 0 auto;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    background: lightslategray;
+}
+
+.navLink {
+    padding: 0 10px;
+    display: flex;
+    width: 100%;
+}
+
+.ulItems {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.item .selected {
+    color: lawngreen;
+}
+
+.item a {
+    font-size: 18px;
+    color: #181717;
+    font-weight: 500;
+}
+
+.content {
+    width: 1240px;
+    margin: 0 auto;
+}

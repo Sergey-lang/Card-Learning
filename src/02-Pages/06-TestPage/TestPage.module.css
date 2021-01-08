@@ -1,0 +1,17 @@
+.testInput {
+   padding: 5px;
+   border: 1px solid silver;
+   border-radius: 5px;
+}
+
+.testButton {
+   width: 100px;
+   height: 30px;
+   background: #e92424;
+   color: white;
+   border-radius: 5px;
+}
+
+.testButton:hover {
+   background: #bc1212;
+}

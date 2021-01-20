@@ -1,9 +1,11 @@
 import {Dispatch} from 'redux';
-import {cardPacksAPI, CreateCardsPackType} from '../../Api/api-cardsPack';
+import {cardPacksAPI} from '../../Api/api-cardsPack';
+import {setAppStatusAC} from './appReducer';
 
 type ActionsType =
     ReturnType<typeof setCardPacks> |
     ReturnType<typeof setFilter> |
+    ReturnType<typeof setAppStatusAC> |
     ReturnType<typeof createCardPacks>
 
 export type CardPacksType = {
@@ -51,7 +53,7 @@ export const cardsPackReducer = (state = initialState, actions: ActionsType): Ca
         case 'SET-FILTER':
             return {...state, filter: actions.payload.filter}
         case 'ADD-CARDS':
-            // return {...state, cardPacks: [...state.cardPacks].push(actions.newPacks)}
+            return {...state, cardPacks:[...state.cardPacks, actions.newPacks]}
         default:
             return state
     }
@@ -71,18 +73,18 @@ export const setFilter = (filter: CardPacksFilterType) => ({
 //Thunks
 export const getCardPacks = (filter: CardPacksFilterType, page?: number, pageCount?: number) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setFilter(filter))
+    dispatch(setAppStatusAC('loading'))
     cardPacksAPI.getCardPacks(filter, page, pageCount)
         .then((res) => {
             const cardsPackArray = res.data.cardPacks
             dispatch(setCardPacks(cardsPackArray))
-            console.log(cardsPackArray)
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 
 export const addCardPacks = (cardPacks: CardPacksType) => (dispatch: Dispatch<ActionsType>) => {
     cardPacksAPI.createCardsPack(cardPacks)
         .then((res) => {
-            debugger
             dispatch(createCardPacks(cardPacks))
             console.log(cardPacks)
         })

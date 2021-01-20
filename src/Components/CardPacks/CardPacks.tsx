@@ -14,10 +14,13 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
     const pageCount = useSelector<RootStateType, number>(state => state.cardsPack.pageCount)
     const page = useSelector<RootStateType, number>(state => state.cardsPack.page)
 
+    const appStatus = useSelector<RootStateType, string>((state) => state.app.statusResponse)
+    const error = useSelector<RootStateType, string | null>((state) => state.app.error)
+
     const filter = useSelector<RootStateType, CardPacksFilterType>(state => state.cardsPack.filter)
     const [inputValue, setInputValue] = useState<string>('')
 
-    const [range, setRange] = useState([3, 5])
+    const [range, setRange] = useState([2, 100])
     console.log(inputValue)
 
     const dispatch = useDispatch()

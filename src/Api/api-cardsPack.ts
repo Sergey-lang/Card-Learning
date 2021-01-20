@@ -24,12 +24,12 @@ export type UpdateCardsPackType = {
 }
 
 export const cardPacksAPI = {
-    getCardPacks(filter: CardPacksFilterType,  page: number = 1, pageCount: number = 4) {
+    getCardPacks(filter: CardPacksFilterType,  page: number = 1, pageCount: number = 10) {
         let {packName, min, max} = filter
         return instance.get<GetCardPacksResponseType>(`cards/pack?packName=${packName}&min=${min}&max=${max}&page=${page}&pageCount=${pageCount}`);
     },
-    createCardsPack(cardPacks: CardPacksType) {
-        return instance.post('cards/pack', {cardPacks});
+    createCardsPack(cardsPack: CardPacksType) {
+        return instance.post('cards/pack', {cardsPack});
     },
     updateCardsPack(cardPacks: UpdateCardsPackType) {
         return instance.put('cards/pack', {cardPacks});

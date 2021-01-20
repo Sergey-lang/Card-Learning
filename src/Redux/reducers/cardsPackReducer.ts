@@ -1,26 +1,29 @@
 import {Dispatch} from 'redux';
-import {cardPacksAPI, CreateCardsPackType} from '../../Api/api-cardsPack';
+import {cardPacksAPI} from '../../Api/api-cardsPack';
 import {setAppErrorAC, setAppStatusAC} from './appReducer';
 
-type ActionsType = ReturnType<typeof setCardPacksAC> | ReturnType<typeof setFilter> | ReturnType<typeof setAppStatusAC>
-    | ReturnType<typeof setAppErrorAC>
+type ActionsType =
+    ReturnType<typeof setCardPacks> |
+    ReturnType<typeof setFilter> |
+    ReturnType<typeof setAppStatusAC> |
+    ReturnType<typeof createCardPacks>
 
 export type CardPacksType = {
     _id: string
-    user_id: string
-    user_name: string
-    private: boolean
+    user_id?: string
+    user_name?: string
+    private?: boolean
     name: string
-    path: string
-    grade: number
-    shots: number
-    cardsCount: number
+    path?: string
+    grade?: number
+    shots?: number
+    cardsCount?: number
     type: string
-    rating: number
-    created: string
-    updated: string
-    more_id: string
-    __v: number
+    rating?: number
+    created?: string
+    updated?: string
+    more_id?: string
+    __v?: number
 }
 
 export type CardPacksFilterType = {
@@ -39,8 +42,6 @@ const initialState = {
         min: 3,
         max: 5,
     } as CardPacksFilterType
-    // token: '',
-    // tokenDeathTime: ''
 } as const
 
 export type CardsPackInitialStateType = typeof initialState
@@ -51,14 +52,18 @@ export const cardsPackReducer = (state = initialState, actions: ActionsType): Ca
             return {...state, cardPacks: actions.cardPacks}
         case 'SET-FILTER':
             return {...state, filter: actions.payload.filter}
+        case 'ADD-CARDS':
+            return {...state, cardPacks: [...state.cardPacks, actions.newPacks]}
         default:
             return state
     }
 }
 
 //Actions
-export const setCardPacksAC = (cardPacks: CardPacksType[]) => ({type: 'SET-CARDS', cardPacks} as const)
-export const addCardPacksAC = (cardPacks: CardPacksType) => ({type: 'ADD-CARDS', cardPacks} as const)
+export const setCardPacks = (cardPacks: CardPacksType[]) => ({type: 'SET-CARDS', cardPacks} as const)
+
+export const createCardPacks = (newPacks: CardPacksType) => ({type: 'ADD-CARDS', newPacks} as const)
+
 export const setFilter = (filter: CardPacksFilterType) => ({
     type: 'SET-FILTER', payload: {
         filter
@@ -68,35 +73,35 @@ export const setFilter = (filter: CardPacksFilterType) => ({
 //Thunks
 export const getCardPacks = (filter: CardPacksFilterType, page?: number, pageCount?: number) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setFilter(filter))
+    dispatch(setAppStatusAC('loading'))
     cardPacksAPI.getCardPacks(filter, page, pageCount)
         .then((res) => {
-
             const cardsPackArray = res.data.cardPacks
-            dispatch(setCardPacksAC(cardsPackArray))
-            console.log(cardsPackArray)
+            dispatch(setCardPacks(cardsPackArray))
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 
-export const addCardPacks = (cardPacks: CreateCardsPackType) => (dispatch: Dispatch<ActionsType>) => {
+export const addCardPacks = (cardPacks: CardPacksType) => (dispatch: Dispatch<ActionsType>) => {
     cardPacksAPI.createCardsPack(cardPacks)
         .then((res) => {
-            const cardsPackArray = res.data.cardPacks
-
-            dispatch(setCardPacksAC(cardsPackArray))
-            console.log(cardsPackArray)
+            dispatch(createCardPacks(cardPacks))
+            console.log(cardPacks)
         })
 }
 
 export const updatePack = (id: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    cardPacksAPI.updateCardsPack(id)
-        .then(response => {
-            console.log(response)
+    cardPacksAPI.updateCardsPack({_id: id})
+        .then(res => {
+            const cardsPackArray = res.data
+            console.log(cardsPackArray)
         })
         .catch((e) => {
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
+            console.log(error)
             dispatch(setAppErrorAC(error))
             dispatch(setAppStatusAC('failed'))
         })
@@ -105,9 +110,10 @@ export const updatePack = (id: string) => (dispatch: Dispatch) => {
 export const deletePack = (id: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     cardPacksAPI.deleteCardsPack(id)
-        .then(response => {
+        .then(res => {
+            const cardsPackArray = res.data
+            console.log(cardsPackArray)
             dispatch(setAppStatusAC('succeeded'))
-            console.log(response)
         })
         .catch((e) => {
             const error = e.response

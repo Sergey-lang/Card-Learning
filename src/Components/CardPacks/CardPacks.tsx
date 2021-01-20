@@ -9,24 +9,25 @@ import {
     updatePack
 } from '../../Redux/reducers/cardsPackReducer';
 import {RootStateType} from '../../Redux/store';
-
-import style from './CardPacks.module.css'
 import Input from '../SuperComponents/Input/Input';
 import Button from '../SuperComponents/Button/Button';
-import {CreateCardsPackType} from '../../Api/api-cardsPack';
 import DoubleRange from '../SuperComponents/DoubleRange/DoubleRange';
 import {Redirect} from 'react-router-dom';
 import {path} from '../../App';
-import ErrorSnackBar from '../ErrorSnackBar/ErrorSnackBar';
+
+import style from './CardPacks.module.css'
 
 type CardPropsType = {}
 
 const CardPacks: React.FC<CardPropsType> = (props) => {
-    let error = useSelector<RootStateType, string | null>(state => state.app.error)
+
     const cards = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
+    //paginator
     const pageCount = useSelector<RootStateType, number>(state => state.cardsPack.pageCount)
     const page = useSelector<RootStateType, number>(state => state.cardsPack.page)
+
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
+
     const filter = useSelector<RootStateType, CardPacksFilterType>(state => state.cardsPack.filter)
 
     const [inputValue, setInputValue] = useState<string>('')
@@ -44,9 +45,11 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
         dispatch(getCardPacks({packName: inputValue, min: range[0], max: range[1]}))
     }
 
-    const cardTestObj: CreateCardsPackType = {
-        name: 'Новая карта',
-        type: 'Тестовая карта 007'
+    //fake obj
+    const cardTestObj: CardPacksType = {
+        _id: '5168161-61165-51',
+        name: 'New cart',
+        type: 'Test cardPacks 007'
     }
 
     const onAddCardPacks = () => {
@@ -86,12 +89,10 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
                     <Button onClick={updateCardPack}>UPDATE</Button>
                     <Button onClick={deleteCardPack}>DELETE</Button>
                 </div>
-                {error && <ErrorSnackBar errorMessage={error}/>}
             </div>
         })
         }
     </div>
-
-};
+}
 
 export default CardPacks

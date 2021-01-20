@@ -24,15 +24,15 @@ export type UpdateCardsPackType = {
 }
 
 export const cardPacksAPI = {
-    getCardPacks(filter: CardPacksFilterType,  page: number = 1, pageCount: number = 4) {
+    getCardPacks(filter: CardPacksFilterType,  page: number = 1, pageCount: number = 10) {
         let {packName, min, max} = filter
         return instance.get<GetCardPacksResponseType>(`cards/pack?packName=${packName}&min=${min}&max=${max}&page=${page}&pageCount=${pageCount}`);
     },
-    createCardsPack(cardPacks: CreateCardsPackType) {
-        return instance.post('cards/pack', {cardPacks});
+    createCardsPack(cardsPack: CardPacksType) {
+        return instance.post('cards/pack', {cardsPack});
     },
-    updateCardsPack(id: string) {
-        return instance.put('cards/pack', {cardsPack: {_id: id, name: 'Pack was updated!',}});
+    updateCardsPack(cardsPack: UpdateCardsPackType) {
+        return instance.put('cards/pack', {cardsPack});
     },
     deleteCardsPack(id: string) {
         return instance.delete(`cards/pack?id=${id}`);

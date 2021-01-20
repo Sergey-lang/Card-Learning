@@ -1,12 +1,10 @@
 import * as React from 'react';
 import {getTrackBackground, Range} from 'react-range';
 
-
 type DoubleRangePropsType = {
     range: Array<number>,
     setRange: (newValues: Array<number>) => void
 }
-
 
 const DoubleRange: React.FC<DoubleRangePropsType> = ({range, setRange, children}) => {
 
@@ -82,4 +80,5 @@ const DoubleRange: React.FC<DoubleRangePropsType> = ({range, setRange, children}
         />
     );
 };
+
 export default DoubleRange

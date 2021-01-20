@@ -4,10 +4,8 @@ import {addCardPacks, CardPacksFilterType, CardPacksType, getCardPacks} from '..
 import {RootStateType} from '../../Redux/store';
 
 import style from './CardPacks.module.css'
-import SearchForm from '../SuperComponents/SearchForm/SearchForm';
 import Input from '../SuperComponents/Input/Input';
 import Button from '../SuperComponents/Button/Button';
-import {CreateCardsPackType} from '../../Api/api-cardsPack';
 
 type CardPropsType = {}
 
@@ -27,16 +25,16 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
     //request on start, data from redux
     useEffect(() => {
         dispatch(getCardPacks(filter, page, pageCount))
-
     }, [])
 
     const onSearch = () => {
         dispatch(getCardPacks({packName: inputValue, min: range[0], max: range[1]}))
     }
 
-    const cardTestObj: CreateCardsPackType = {
-        name: 'Новая карта',
-        type:'Тестовая карта 007'
+    const cardTestObj: CardPacksType = {
+        _id: '5168161-61165-51',
+        name: 'New cart',
+        type: 'Test cardPacks 007'
     }
 
     const onAddCardPacks = () => {
@@ -48,7 +46,9 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
             <Input onChange={(e) => setInputValue(e.currentTarget.value)}/>
         </div>
         <Button onClick={onSearch}>Search</Button>
+
         <Button onClick={onAddCardPacks}>Add CardPacks</Button>
+
         {
             cards && cards.map((cardsPack: CardPacksType) => {
                 return <div key={cardsPack._id} className={style.card}>

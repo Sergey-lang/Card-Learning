@@ -28,7 +28,7 @@ export const cardPacksAPI = {
         let {packName, min, max} = filter
         return instance.get<GetCardPacksResponseType>(`cards/pack?packName=${packName}&min=${min}&max=${max}&page=${page}&pageCount=${pageCount}`);
     },
-    createCardsPack(cardPacks: CreateCardsPackType) {
+    createCardsPack(cardPacks: CardPacksType) {
         return instance.post('cards/pack', {cardPacks});
     },
     updateCardsPack(cardPacks: UpdateCardsPackType) {

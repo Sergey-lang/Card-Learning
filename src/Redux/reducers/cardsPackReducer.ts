@@ -1,7 +1,9 @@
 import {Dispatch} from 'redux';
 import {cardPacksAPI, CreateCardsPackType} from '../../Api/api-cardsPack';
+import {setAppErrorAC, setAppStatusAC} from './appReducer';
 
-type ActionsType = ReturnType<typeof setCardPacksAC> | ReturnType<typeof setFilter>
+type ActionsType = ReturnType<typeof setCardPacksAC> | ReturnType<typeof setFilter> | ReturnType<typeof setAppStatusAC>
+    | ReturnType<typeof setAppErrorAC>
 
 export type CardPacksType = {
     _id: string
@@ -84,5 +86,40 @@ debugger
 
             dispatch(setCardPacksAC(cardsPackArray))
             console.log(cardsPackArray)
+        })
+}
+
+export const updatePack = (id: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    cardPacksAPI.updateCardsPack({_id:id} )
+        .then(response => {
+            console.log(response)
+        })
+        .catch((e) => {
+
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            console.log(error)
+            dispatch(setAppErrorAC(error))
+            dispatch(setAppStatusAC('failed'))
+        })
+}
+
+export const deletePack = (id: string) => (dispatch: Dispatch) => {
+    debugger
+    dispatch(setAppStatusAC('loading'))
+    cardPacksAPI.deleteCardsPack(id)
+        .then(response => {
+            dispatch(setAppStatusAC('succeeded'))
+            console.log(response)
+            //ignore
+        })
+        .catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setAppErrorAC(error))
+            dispatch(setAppStatusAC('failed'))
         })
 }

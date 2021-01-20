@@ -89,3 +89,38 @@ export const addCardPacks = (cardPacks: CardPacksType) => (dispatch: Dispatch<Ac
             console.log(cardPacks)
         })
 }
+
+export const updatePack = (id: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    cardPacksAPI.updateCardsPack({_id:id} )
+        .then(response => {
+            console.log(response)
+        })
+        .catch((e) => {
+
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            console.log(error)
+            dispatch(setAppErrorAC(error))
+            dispatch(setAppStatusAC('failed'))
+        })
+}
+
+export const deletePack = (id: string) => (dispatch: Dispatch) => {
+    debugger
+    dispatch(setAppStatusAC('loading'))
+    cardPacksAPI.deleteCardsPack(id)
+        .then(response => {
+            dispatch(setAppStatusAC('succeeded'))
+            console.log(response)
+            //ignore
+        })
+        .catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setAppErrorAC(error))
+            dispatch(setAppStatusAC('failed'))
+        })
+}

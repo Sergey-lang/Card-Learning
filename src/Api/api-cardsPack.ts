@@ -31,8 +31,8 @@ export const cardPacksAPI = {
     createCardsPack(cardPacks: CreateCardsPackType) {
         return instance.post('cards/pack', {cardPacks});
     },
-    updateCardsPack(cardPacks: UpdateCardsPackType) {
-        return instance.put('cards/pack', {cardPacks});
+    updateCardsPack(id: string) {
+        return instance.put('cards/pack', {cardsPack: {_id: id, name: 'Pack was updated!',}});
     },
     deleteCardsPack(id: string) {
         return instance.delete(`cards/pack?id=${id}`);

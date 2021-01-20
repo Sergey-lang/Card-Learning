@@ -17,10 +17,12 @@ import {CreateCardsPackType} from '../../Api/api-cardsPack';
 import DoubleRange from '../SuperComponents/DoubleRange/DoubleRange';
 import {Redirect} from 'react-router-dom';
 import {path} from '../../App';
+import ErrorSnackBar from '../ErrorSnackBar/ErrorSnackBar';
 
 type CardPropsType = {}
 
 const CardPacks: React.FC<CardPropsType> = (props) => {
+    let error = useSelector<RootStateType, string | null>(state => state.app.error)
     const cards = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
     const pageCount = useSelector<RootStateType, number>(state => state.cardsPack.pageCount)
     const page = useSelector<RootStateType, number>(state => state.cardsPack.page)
@@ -84,6 +86,7 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
                     <Button onClick={updateCardPack}>UPDATE</Button>
                     <Button onClick={deleteCardPack}>DELETE</Button>
                 </div>
+                {error && <ErrorSnackBar errorMessage={error}/>}
             </div>
         })
         }

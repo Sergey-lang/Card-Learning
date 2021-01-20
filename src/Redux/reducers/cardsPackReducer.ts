@@ -72,7 +72,6 @@ export const getCardPacks = (filter: CardPacksFilterType, page?: number, pageCou
         .then((res) => {
 
             const cardsPackArray = res.data.cardPacks
-
             dispatch(setCardPacksAC(cardsPackArray))
             console.log(cardsPackArray)
         })
@@ -81,7 +80,6 @@ export const getCardPacks = (filter: CardPacksFilterType, page?: number, pageCou
 export const addCardPacks = (cardPacks: CreateCardsPackType) => (dispatch: Dispatch<ActionsType>) => {
     cardPacksAPI.createCardsPack(cardPacks)
         .then((res) => {
-debugger
             const cardsPackArray = res.data.cardPacks
 
             dispatch(setCardPacksAC(cardsPackArray))
@@ -91,29 +89,25 @@ debugger
 
 export const updatePack = (id: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    cardPacksAPI.updateCardsPack({_id:id} )
+    cardPacksAPI.updateCardsPack(id)
         .then(response => {
             console.log(response)
         })
         .catch((e) => {
-
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
-            console.log(error)
             dispatch(setAppErrorAC(error))
             dispatch(setAppStatusAC('failed'))
         })
 }
 
 export const deletePack = (id: string) => (dispatch: Dispatch) => {
-    debugger
     dispatch(setAppStatusAC('loading'))
     cardPacksAPI.deleteCardsPack(id)
         .then(response => {
             dispatch(setAppStatusAC('succeeded'))
             console.log(response)
-            //ignore
         })
         .catch((e) => {
             const error = e.response

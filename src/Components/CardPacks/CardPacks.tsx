@@ -16,6 +16,7 @@ import {Redirect} from 'react-router-dom';
 import {path} from '../../App';
 
 import style from './CardPacks.module.css'
+import ErrorSnackBar from '../ErrorSnackBar/ErrorSnackBar';
 
 type CardPropsType = {}
 
@@ -27,6 +28,8 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
     const page = useSelector<RootStateType, number>(state => state.cardsPack.page)
 
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
+    const error = useSelector<RootStateType, string | null>(state => state.app.error)
+    const statusResponse = useSelector<RootStateType, string>(state => state.app.statusResponse)
 
     const filter = useSelector<RootStateType, CardPacksFilterType>(state => state.cardsPack.filter)
 
@@ -66,8 +69,8 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
         <div>
             <Input onChange={(e) => setInputValue(e.currentTarget.value)}/>
         </div>
-        <Button onClick={onSearch}>Search</Button>
-        <Button onClick={onAddCardPacks}>Add CardPacks</Button>
+        <Button onClick={onSearch} disabled={statusResponse === 'loading'}>Search</Button>
+        <Button onClick={onAddCardPacks} disabled={statusResponse === 'loading'}>Add CardPacks</Button>
         {cards && cards.map((cardsPack: CardPacksType) => {
             //need to move this piece to other component
             const updateCardPack = () => {
@@ -86,8 +89,11 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
                 <div className={style.content}>
                     <p>{cardsPack.created}</p>
                     <p>Cards Count: {cardsPack.cardsCount}</p>
-                    <Button onClick={updateCardPack}>UPDATE</Button>
-                    <Button onClick={deleteCardPack}>DELETE</Button>
+                    <Button onClick={updateCardPack} disabled={statusResponse === 'loading'}>UPDATE</Button>
+                    <Button onClick={deleteCardPack} disabled={statusResponse === 'loading'} >DELETE</Button>
+                </div>
+                <div>
+                    {error && <ErrorSnackBar errorMessage={error}/>}
                 </div>
             </div>
         })

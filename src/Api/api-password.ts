@@ -1,10 +1,4 @@
-import {instance} from './api';
-
-//Global response
-export type APIResponseType<D = {}> = {
-    data: D
-    statusText: string
-}
+import {APIResponseType, instance} from './api';
 
 //Response types
 export type PasswordRecoveryType = {

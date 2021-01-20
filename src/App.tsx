@@ -13,6 +13,7 @@ import ProgressBar from "./Components/SuperComponents/ProgressBar/ProgressBar";
 import {RequestStatusType} from "./Redux/reducers/appReducer";
 import {ResetPassword} from './Components/Password/ResetPassword';
 import {PasswordRecovery} from './Components/Password/PasswordRecovery';
+import CardPacks from "./Components/CardPacks/CardPacks";
 
 
 export const path = {
@@ -22,6 +23,7 @@ export const path = {
     PASS_REC: '/passwordRecovery',
     PROFILE: '/profile',
     ALL_COMPONENTS: '/allComponents',
+    CARD_PACKS: '/CARD_PACKS'
 }
 
 function App() {
@@ -39,7 +41,7 @@ function App() {
             <Route path={path.PASSWORD} exact render={() => <ResetPassword/>}/>
             <Route path={path.PASS_REC} exact render={() => <PasswordRecovery/>}/>
             <Route path={path.PROFILE} exact render={() => <Profile/>}/>
-            <Route path={path.ALL_COMPONENTS} exact render={() => <AllComponents/>}/>
+            <Route path={path.CARD_PACKS} exact render={() => <CardPacks/>}/>
             {/*Отрисуется в случае если не один url не подойдет (´｡• ᵕ •｡)*/}
             <Route path={'/404'} render={() => <NotFound/>}/>
             <Redirect from={'*'} to={'/404'}/>

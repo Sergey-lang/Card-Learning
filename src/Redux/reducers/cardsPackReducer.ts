@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux';
 import {cardPacksAPI} from '../../Api/api-cardsPack';
-import {setAppStatusAC} from './appReducer';
+import {setAppErrorAC, setAppStatusAC} from './appReducer';
 
 type ActionsType =
     ReturnType<typeof setCardPacks> |
@@ -53,7 +53,7 @@ export const cardsPackReducer = (state = initialState, actions: ActionsType): Ca
         case 'SET-FILTER':
             return {...state, filter: actions.payload.filter}
         case 'ADD-CARDS':
-            return {...state, cardPacks:[...state.cardPacks, actions.newPacks]}
+            return {...state, cardPacks: [...state.cardPacks, actions.newPacks]}
         default:
             return state
     }
@@ -92,12 +92,12 @@ export const addCardPacks = (cardPacks: CardPacksType) => (dispatch: Dispatch<Ac
 
 export const updatePack = (id: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    cardPacksAPI.updateCardsPack({_id:id} )
-        .then(response => {
-            console.log(response)
+    cardPacksAPI.updateCardsPack({_id: id})
+        .then(res => {
+            const cardsPackArray = res.data
+            console.log(cardsPackArray)
         })
         .catch((e) => {
-
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
@@ -108,13 +108,12 @@ export const updatePack = (id: string) => (dispatch: Dispatch) => {
 }
 
 export const deletePack = (id: string) => (dispatch: Dispatch) => {
-    debugger
     dispatch(setAppStatusAC('loading'))
     cardPacksAPI.deleteCardsPack(id)
-        .then(response => {
+        .then(res => {
+            const cardsPackArray = res.data
+            console.log(cardsPackArray)
             dispatch(setAppStatusAC('succeeded'))
-            console.log(response)
-            //ignore
         })
         .catch((e) => {
             const error = e.response

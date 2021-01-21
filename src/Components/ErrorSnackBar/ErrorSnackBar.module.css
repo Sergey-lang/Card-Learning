@@ -12,6 +12,7 @@
     animation: 0.3s down ease 1;
     left: 50%;
     transform: translate(-50%, 0px);
+
 }
 
 .closeNotification{

@@ -1,13 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-    addCardPacks,
-    CardPacksFilterType,
-    CardPacksType,
-    deletePack,
-    getCardPacks,
-    updatePack
-} from '../../Redux/reducers/cardsPackReducer';
+import {addCardPacks, CardPacksFilterType, CardPacksType, getCardPacks} from '../../Redux/reducers/cardsPackReducer';
 import {RootStateType} from '../../Redux/store';
 import Input from '../SuperComponents/Input/Input';
 import Button from '../SuperComponents/Button/Button';
@@ -16,17 +9,22 @@ import {Redirect} from 'react-router-dom';
 import {path} from '../../App';
 
 import style from './CardPacks.module.css'
+import Table from '../SuperComponents/Table/Table';
 
 type CardPropsType = {}
 
 const CardPacks: React.FC<CardPropsType> = (props) => {
 
-    const cards = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
-    //paginator
+    const cardsPacks = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
+        //for table
+    const dataForTable=cardsPacks.map(el=>{return{id:el._id,name:el.name, cards:el.cardsCount, rating:el.rating, type:el.type}})
+
     const pageCount = useSelector<RootStateType, number>(state => state.cardsPack.pageCount)
     const page = useSelector<RootStateType, number>(state => state.cardsPack.page)
 
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
+    const error = useSelector<RootStateType, string | null>(state => state.app.error)
+    const statusResponse = useSelector<RootStateType, string>(state => state.app.statusResponse)
 
     const filter = useSelector<RootStateType, CardPacksFilterType>(state => state.cardsPack.filter)
 
@@ -61,39 +59,16 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
     }
 
     return <div>
-        <div>
+        <div className={style.search}>
             <DoubleRange range={range} setRange={setRange}/>
-        </div>
-        <div>
             <Input onChange={(e) => setInputValue(e.currentTarget.value)}/>
+            <Button onClick={onSearch} disabled={statusResponse === 'loading'}>Search</Button>
+            <Button onClick={onAddCardPacks} disabled={statusResponse === 'loading'}>Add CardPacks</Button>
         </div>
-        <Button onClick={onSearch}>Search</Button>
-        <Button onClick={onAddCardPacks}>Add CardPacks</Button>
-        {cards && cards.map((cardsPack: CardPacksType) => {
-            //need to move this piece to other component
-            const updateCardPack = () => {
-                console.log(cardsPack._id)
-                dispatch(updatePack(cardsPack._id))
-            }
-            const deleteCardPack = () => {
-                console.log(cardsPack._id)
-                dispatch(deletePack(cardsPack._id))
-            }
-
-            return <div key={cardsPack._id} className={style.card}>
-                <div className={style.heading} style={{backgroundColor: '#4285f4'}}>
-                    <h1>Pack Name: {cardsPack.name}</h1>
-                </div>
-                <div className={style.content}>
-                    <p>{cardsPack.created}</p>
-                    <p>Cards Count: {cardsPack.cardsCount}</p>
-                    <Button onClick={updateCardPack}>UPDATE</Button>
-                    <Button onClick={deleteCardPack}>DELETE</Button>
-                </div>
-            </div>
-        })
-        }
+       <Table data={dataForTable}/>
+       
     </div>
 }
 
 export default CardPacks
+//  {error && <ErrorSnackBar errorMessage={error}/>}

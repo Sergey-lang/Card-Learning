@@ -55,6 +55,7 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
     const onAddCardPacks = () => {
         dispatch(addCardPacks(cardTestObj))
     }
+
     if (!isAuth) {
         return <Redirect to={path.LOGIN}/>
     }

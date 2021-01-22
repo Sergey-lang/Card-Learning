@@ -10,7 +10,6 @@ import Button from '../SuperComponents/Button/Button';
 import {path} from '../../App';
 import ErrorSnackBar from '../ErrorSnackBar/ErrorSnackBar';
 
-
 type LoginPropsType = {}
 
 const Login: React.FC<LoginPropsType> = React.memo(() => {
@@ -23,14 +22,13 @@ const Login: React.FC<LoginPropsType> = React.memo(() => {
     let [password, setPassword] = useState<string>('')
     let [rememberMe, setRememberMe] = useState<boolean>(false)
 
-
     let onclickEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => setEmail(e.currentTarget.value), [setEmail])
-    let onclickPassword = useCallback((e: ChangeEvent<HTMLInputElement>) => setPassword(e.currentTarget.value),[setPassword])
-    let onclickCheckbox = useCallback((e: ChangeEvent<HTMLInputElement>) => setRememberMe(e.currentTarget.checked),[setRememberMe])
+    let onclickPassword = useCallback((e: ChangeEvent<HTMLInputElement>) => setPassword(e.currentTarget.value), [setPassword])
+    let onclickCheckbox = useCallback((e: ChangeEvent<HTMLInputElement>) => setRememberMe(e.currentTarget.checked), [setRememberMe])
 
     let onclickHandler = useCallback(() => {
         dispatch(getAuthUserData(email, password, rememberMe))
-    },[email, password, rememberMe,dispatch])
+    }, [email, password, rememberMe, dispatch])
     if (isAuth) {
         return <Redirect to={path.PROFILE}/>
     }

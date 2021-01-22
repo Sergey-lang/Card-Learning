@@ -24,7 +24,6 @@ const AllComponents: React.FC<AllComponentsPropsType> = () => {
         <RadioInput/>
         <SelectInput/>
         <ProgressBar/>
-        <CardPacks />
     </div>
 }
 

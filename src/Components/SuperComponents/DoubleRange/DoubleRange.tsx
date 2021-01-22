@@ -11,7 +11,7 @@ const DoubleRange: React.FC<DoubleRangePropsType> = ({range, setRange, children}
     return (
         <Range
             values={range}
-            step={1}
+            step={2}
             min={0}
             max={15}
             onChange={values => setRange(values)}

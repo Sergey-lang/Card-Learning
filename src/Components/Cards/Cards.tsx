@@ -1,32 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-    addCardPacks,
     CardPacksFilterType,
     CardPacksType,
     deleteCardPacks,
-    getCardPacks, updateCardPacks
+    getCardPacks,
+    updateCardPacks
 } from '../../Redux/reducers/cardsPackReducer';
 import {RootStateType} from '../../Redux/store';
 import Input from '../SuperComponents/Input/Input';
 import Button from '../SuperComponents/Button/Button';
 import DoubleRange from '../SuperComponents/DoubleRange/DoubleRange';
 
-import style from './CardPacks.module.css'
-import CardPacksElement from './CardPaksElement/CardPacksElement';
-import UserIsNotAuthorized from '../Login/UserIsNotAuthorized';
-import {Redirect} from 'react-router-dom';
-import {path} from '../../App';
+import style from './Cards.module.css'
+import {addCard, CardType, getCards} from '../../Redux/reducers/cardsReducer';
 
-type CardPropsType = {}
+type PropsType = {
+    id: string
+}
 
-const CardPacks: React.FC<CardPropsType> = (props) => {
+const Cards: React.FC<PropsType> = ({id}) => {
 
-    const cardPacks = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
-    const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
+    console.log(id)
 
-    // const pageCount = useSelector<RootStateType, number>(state => state.cardsPack.pageCount)
-    // const page = useSelector<RootStateType, number>(state => state.cardsPack.page)
+    const cards = useSelector<RootStateType, CardType[]>(state => state.cards.cards)
 
     const filter = useSelector<RootStateType, CardPacksFilterType>(state => state.cardsPack.filter)
 
@@ -35,8 +32,9 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
 
     const dispatch = useDispatch()
 
+    //request on start, data from redux
     useEffect(() => {
-        dispatch(getCardPacks(filter))
+        dispatch(getCards(filter, id))
     }, [])
 
     const onSearch = () => {
@@ -48,14 +46,14 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
     }
 
     //fake obj
-    const cardTestObj: CardPacksType = {
-        '_id': genID(5),
-        name: 'New cart Sergey',
-        type: 'Test cardPacks 007'
+    const cardTestObj: CardType = {
+        question: 'How is it work??!!!',
+        cardsPack_id: id,
+        _id: genID(2),
     }
 
     const onAddCardPacks = () => {
-        dispatch(addCardPacks(cardTestObj))
+        dispatch(addCard(cardTestObj))
     }
 
     const changeCardPacks = (cardsPack: CardPacksType) => {
@@ -66,10 +64,6 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
         dispatch(deleteCardPacks(_id))
     }
 
-    if (!isAuth) {
-        return <Redirect to={path.LOGIN}/>
-    }
-
     return <div>
         <div className={style.search}>
             <DoubleRange range={range} setRange={setRange}/>
@@ -77,13 +71,13 @@ const CardPacks: React.FC<CardPropsType> = (props) => {
             <Button onClick={onSearch}>Search</Button>
             <Button onClick={onAddCardPacks}>Add CardPacks</Button>
             {
-                cardPacks.map((p: CardPacksType) => <CardPacksElement key={p._id}
-                                                                      cardPack={p}
-                                                                      updateCardPacks={changeCardPacks}
-                                                                      removeCardPacks={removeCardPacks}/>)
+                cards.map((card: CardType) => <div key={card._id}>
+                    <span>{card.question}</span>
+                    <span>{card.created}</span>
+                </div>)
             }
         </div>
     </div>
 }
 
-export default CardPacks
+export default Cards

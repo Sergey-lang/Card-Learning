@@ -15,6 +15,7 @@ import DoubleRange from '../../03-Components/SuperComponents/DoubleRange/DoubleR
 import CardPacksElement from './CardPaksElement/CardPacksElement';
 
 import style from './CardPacks.module.css'
+import {Paginator} from '../../03-Components/Paginator/Paginator';
 
 export type queryParamsType = {
     packName?: string,
@@ -27,6 +28,9 @@ const CardPacks: React.FC = () => {
     const cardPacks = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
 
     const filter = useSelector<RootStateType, CardPacksFilterType>(state => state.cardsPack.filter)
+    const currentPage = useSelector<RootStateType, number>(state => state.cardsPack.currentPage)
+    const pageSize = useSelector<RootStateType, number>(state => state.cardsPack.pageSize)
+    const packsTotalCount = useSelector<RootStateType, number>(state => state.cardsPack.packsTotalCount)
 
     const [inputValue, setInputValue] = useState<string>('')
     const [range, setRange] = useState([0, 15])
@@ -34,17 +38,21 @@ const CardPacks: React.FC = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getCardPacks(filter))
+        dispatch(getCardPacks(currentPage, pageSize, filter))
     }, [])
 
-    let queryObj: queryParamsType = {
-        packName: inputValue,
-        min: range[0],
-        max: range[1],
+    const onPageChanged = (currentPage: number) => {
+        dispatch(getCardPacks(currentPage, pageSize, filtered))
     }
 
     const onSearch = () => {
-        dispatch(getCardPacks(queryObj))
+        dispatch(getCardPacks(currentPage, pageSize, filtered))
+    }
+
+    let filtered: CardPacksFilterType = {
+        packName: inputValue,
+        min: range[0],
+        max: range[1],
     }
 
     //generate random id
@@ -64,31 +72,37 @@ const CardPacks: React.FC = () => {
     const onAddCardPacks = () => {
         dispatch(addCardPacks(cardTestObj))
     }
-
     const changeCardPacks = (cardsPack: CardPacksType) => {
         dispatch(updateCardPacks(cardsPack))
     }
-
     const removeCardPacks = (_id: string) => {
         dispatch(deleteCardPacks(_id))
     }
 
-    const mappedPacks = cardPacks.map((p: CardPacksType) => <CardPacksElement key={p._id}
-                                                                              pack={p}
-                                                                              updateCardPacks={changeCardPacks}
-                                                                              removeCardPacks={removeCardPacks}/>)
+    const mappedPacks = cardPacks.map((p: CardPacksType) =>
+        <CardPacksElement key={p._id}
+                          pack={p}
+                          updateCardPacks={changeCardPacks}
+                          removeCardPacks={removeCardPacks}/>)
 
-    return <div>
-        <div className={style.search}>
-            <DoubleRange range={range} setRange={setRange}/>
-            <Input onChange={inputHandler}/>
-            <Button onClick={onSearch}>Search</Button>
-            <Button onClick={onAddCardPacks}>Add CardPacks</Button>
-            {
-                mappedPacks
-            }
+
+    return (
+        <div>
+            <div className={style.search}>
+                <DoubleRange range={range} setRange={setRange}/>
+                <Input onChange={inputHandler}/>
+                <Button onClick={onSearch}>Search</Button>
+                <Button onClick={onAddCardPacks}>Add CardPacks</Button>
+                <Paginator currentPage={currentPage}
+                           onPageChanged={onPageChanged}
+                           pageSize={pageSize}
+                           totalItemsCount={packsTotalCount}/>
+                {
+                    mappedPacks
+                }
+            </div>
         </div>
-    </div>
+    )
 }
 
 export default CardPacks

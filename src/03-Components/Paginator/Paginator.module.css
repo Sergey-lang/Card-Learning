@@ -1,0 +1,33 @@
+.users_page_num {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: content-box;
+    padding: 5px;
+}
+
+.totalCount {
+    width: auto;
+    padding: 0 2px;
+    cursor: pointer;
+}
+
+.pageNumber {
+    display: flex;
+    justify-content: center;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.pageNumber:first-of-type {
+    margin-left: 5px;
+}
+
+.pageNumber:last-of-type {
+    margin-right: 5px;
+}
+
+.selected {
+    font-weight: 600;
+}

@@ -5,7 +5,6 @@ import {profileReducer} from '../00-Redux/profile-reducer';
 import {appReducer} from '../00-Redux/app-reducer';
 import {cardsPackReducer} from '../00-Redux/cardsPack-reducer';
 import {cardsReducer} from '../00-Redux/cards-reducer';
-import {learningPacksReducer} from '../02-Pages/07-Learning/learningPacks-reducer';
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
@@ -15,7 +14,6 @@ const rootReducer = combineReducers({
     app: appReducer,
     cardsPack: cardsPackReducer,
     cards: cardsReducer,
-    learningPacks: learningPacksReducer
 })
 
 export type RootStateType = ReturnType<typeof rootReducer>

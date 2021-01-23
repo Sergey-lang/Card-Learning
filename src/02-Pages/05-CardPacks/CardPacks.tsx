@@ -85,7 +85,6 @@ const CardPacks: React.FC = () => {
                           updateCardPacks={changeCardPacks}
                           removeCardPacks={removeCardPacks}/>)
 
-
     return (
         <div>
             <div className={style.search}>

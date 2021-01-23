@@ -3,7 +3,6 @@ import {cardPacksAPI} from '../01-API/03-cardsPack-api';
 import {setAppStatusAC} from './app-reducer';
 import {ThunkDispatch} from 'redux-thunk';
 import {RootStateType} from '../04-App/store';
-import {queryParamsType} from '../02-Pages/05-CardPacks/CardPacks';
 
 type ActionsType =
     ReturnType<typeof setCardPacks> |
@@ -93,6 +92,7 @@ export const setFilter = (filter: CardPacksFilterType) => ({
 
 //Thunks
 export const getCardPacks = (requestPage: number, pageSize: number, filter: CardPacksFilterType) => (dispatch: Dispatch<ActionsType>) => {
+
     dispatch(setCurrentPage(requestPage))
     dispatch(setFilter(filter))
 

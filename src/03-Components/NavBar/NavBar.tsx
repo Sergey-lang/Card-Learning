@@ -20,7 +20,6 @@ const NavBar: React.FC = () => {
                 <li><NavLink to={path.PASSWORD}>New password</NavLink></li>
                 <li><NavLink to={path.PROFILE}>Profile</NavLink></li>
                 <li><NavLink to={path.CARD_PACKS}>Cards Pack</NavLink></li>
-                <li><NavLink to={path.PACKS_LEARNING}>Learning</NavLink></li>
                 <li><NavLink to={'/'}>All components</NavLink></li>
                 <li><Logout/></li>
             </ul>

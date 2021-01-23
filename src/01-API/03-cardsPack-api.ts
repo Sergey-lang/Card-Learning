@@ -1,9 +1,9 @@
 import {instance} from './api';
-import {CardPacksType} from '../00-Redux/cardsPack-reducer';
+import {CardPacksType} from '../00-Redux/card-packs-reducer';
 
 export const cardPacksAPI = {
-    getCardPacks(page: number, pageCount: number, packName: string = '', min: number, max: number) {
-        return instance.get<GetCardPacksResponseType>(`cards/pack?page=${page}&pageCount=${pageCount}&packName=${packName}&min=${min}&max=${max}`);
+    getCardPacks(page: number, pageCount: number, packName: string = '', min: number, max: number, user_id: string) {
+        return instance.get<GetCardPacksResponseType>(`cards/pack?page=${page}&pageCount=${pageCount}&packName=${packName}&min=${min}&max=${max}&user_id=${user_id}`);
     },
     createCardsPack(cardsPack: CardPacksType) {
         return instance.post('cards/pack', {cardsPack});

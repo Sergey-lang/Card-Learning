@@ -7,21 +7,25 @@ import s from './CardPacksElement.module.css'
 
 type CardPropsType = {
     pack: CardPacksType
-    updateCardPacks: (cardsPack: CardPacksType) => void
-    removeCardPacks: (id: string) => void
+    updateCardPacks?: (cardsPack: CardPacksType) => void
+    removeCardPacks?: (id: string) => void
+    showBtn?: boolean
 }
 
 const CardPacksElement: React.FC<CardPropsType> = (
     {
-        pack, updateCardPacks, removeCardPacks
+        pack,
+        updateCardPacks,
+        removeCardPacks,
+        showBtn = true
     }) => {
 
     const onUpdateHandler = () => {
-        updateCardPacks({_id: pack._id, name: 'fake Sergey007', type: 'bla-type'})
+        updateCardPacks && updateCardPacks({_id: pack._id, name: 'fake Sergey007', type: 'bla-type'})
     }
 
     const onRemoveHandler = () => {
-        removeCardPacks(pack._id)
+        removeCardPacks && removeCardPacks(pack._id)
     }
 
     return (
@@ -29,9 +33,16 @@ const CardPacksElement: React.FC<CardPropsType> = (
             <div>{pack.name}</div>
             <div>{pack.cardsCount ? pack.cardsCount : `empty`}</div>
             <div>{pack.created}</div>
-            <button onClick={onUpdateHandler}>Update</button>
-            <button onClick={onRemoveHandler}>Delete</button>
-            <NavLink to={path.CARDS + '/'+ pack._id}>ссылка</NavLink>
+            <div>
+                {showBtn ?
+                    <>
+                        <button onClick={onUpdateHandler}>Update</button>
+                        <button onClick={onRemoveHandler}>Delete</button>
+                    </>
+                    : ''}
+            </div>
+
+            <NavLink to={path.CARDS + '/' + pack._id}>ссылка</NavLink>
         </div>
     )
 }

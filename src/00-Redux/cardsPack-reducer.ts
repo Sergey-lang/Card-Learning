@@ -9,6 +9,8 @@ type ActionsType =
     ReturnType<typeof setCardPacks> |
     ReturnType<typeof setFilter> |
     ReturnType<typeof setAppStatusAC> |
+    ReturnType<typeof setCurrentPage> |
+    ReturnType<typeof setPacksTotalCount> |
     ReturnType<typeof createCardPacks>
 
 export type CardPacksType = {
@@ -37,9 +39,9 @@ export type CardPacksFilterType = {
 
 const initialState = {
     cardPacks: [] as CardPacksType[],
-    page: 1,
-    pageCount: 3,
-    cardPacksTotalCount: 5,
+    currentPage: 1 as number,
+    pageSize: 10 as number,
+    packsTotalCount: 5 as number,
     filter: {
         packName: '',
         min: 0,
@@ -51,8 +53,14 @@ export type CardsPackInitialStateType = typeof initialState
 
 export const cardsPackReducer = (state = initialState, actions: ActionsType): CardsPackInitialStateType => {
     switch (actions.type) {
+        case 'CARDS/CARD-PACKS/SET-CURRENT-PAGE':
+            return {...state, currentPage: actions.currentPage};
+        case 'CARDS/CARD-PACKS/SET-PACKS-TOTAL-COUNT':
+            return {...state, packsTotalCount: actions.packsTotalCount};
         case 'CARDS/CARD-PACKS/SET-FILTER':
             return {...state, filter: actions.payload.filter}
+
+
         case 'CARDS/CARD-PACKS/SET-CARDS':
             return {...state, cardPacks: actions.cardPacks}
         case 'CARDS/CARD-PACKS/ADD-CARDS':
@@ -67,6 +75,16 @@ export const setCardPacks = (cardPacks: CardPacksType[]) => ({type: 'CARDS/CARD-
 
 export const createCardPacks = (newPacks: CardPacksType) => ({type: 'CARDS/CARD-PACKS/ADD-CARDS', newPacks} as const)
 
+export const setCurrentPage = (currentPage: number) => ({
+    type: 'CARDS/CARD-PACKS/SET-CURRENT-PAGE',
+    currentPage
+} as const)
+
+export const setPacksTotalCount = (packsTotalCount: number) => ({
+    type: 'CARDS/CARD-PACKS/SET-PACKS-TOTAL-COUNT',
+    packsTotalCount
+} as const)
+
 export const setFilter = (filter: CardPacksFilterType) => ({
     type: 'CARDS/CARD-PACKS/SET-FILTER', payload: {
         filter
@@ -74,31 +92,38 @@ export const setFilter = (filter: CardPacksFilterType) => ({
 } as const)
 
 //Thunks
-export const getCardPacks = (queryObj: queryParamsType) => (dispatch: Dispatch<ActionsType>) => {
-    const {packName, min, max} = queryObj
-    cardPacksAPI.getCardPacks(packName, min, max)
+export const getCardPacks = (requestPage: number, pageSize: number, filter: CardPacksFilterType) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setCurrentPage(requestPage))
+    dispatch(setFilter(filter))
+
+    cardPacksAPI.getCardPacks(requestPage, pageSize, filter.packName, filter.min, filter.max)
         .then((res) => {
             dispatch(setCardPacks(res.data.cardPacks))
+            dispatch(setPacksTotalCount(res.data.cardPacksTotalCount))
         })
 }
 
 export const addCardPacks = (cardPacks: CardPacksType) => (dispatch: ThunkDispatch<RootStateType, unknown, ActionsType>, getState: () => RootStateType) => {
 
+    const requestPage = getState().cardsPack.currentPage
+    const pageSize = getState().cardsPack.pageSize
     const filter = getState().cardsPack.filter
 
     cardPacksAPI.createCardsPack(cardPacks)
         .then((res) => {
-            dispatch(getCardPacks(filter))
+            dispatch(getCardPacks(requestPage, pageSize, filter))
         })
 }
 
 export const updateCardPacks = (cardsPack: CardPacksType) => (dispatch: ThunkDispatch<RootStateType, unknown, ActionsType>, getState: () => RootStateType) => {
 
+    const requestPage = getState().cardsPack.currentPage
+    const pageSize = getState().cardsPack.pageSize
     const filter = getState().cardsPack.filter
 
     cardPacksAPI.updateCardsPack(cardsPack)
         .then(res => {
-            dispatch(getCardPacks(filter))
+            dispatch(getCardPacks(requestPage, pageSize, filter))
         })
         .catch((e) => {
             const error = e.response
@@ -110,11 +135,13 @@ export const updateCardPacks = (cardsPack: CardPacksType) => (dispatch: ThunkDis
 
 export const deleteCardPacks = (id: string) => (dispatch: ThunkDispatch<RootStateType, unknown, ActionsType>, getState: () => RootStateType) => {
 
+    const requestPage = getState().cardsPack.currentPage
+    const pageSize = getState().cardsPack.pageSize
     const filter = getState().cardsPack.filter
 
     cardPacksAPI.deleteCardsPack(id)
         .then(res => {
-            dispatch(getCardPacks(filter))
+            dispatch(getCardPacks(requestPage, pageSize, filter))
         })
         .catch((e) => {
             const error = e.response

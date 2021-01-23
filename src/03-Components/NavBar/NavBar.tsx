@@ -27,7 +27,6 @@ const NavBar: React.FC = () => {
         <div className={`${style.main} ${style.center}`}>
             <div className={style.mainInner}>
             </div>
-
         </div>
     </div>
 

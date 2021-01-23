@@ -1,16 +1,15 @@
 import React, {ChangeEvent, useState} from 'react';
 import {path} from '../../../04-App/App';
 import {NavLink} from 'react-router-dom';
-import {CardPacksType} from '../../../00-Redux/cardsPack-reducer';
+import {CardPacksType} from '../../../00-Redux/card-packs-reducer';
 
 import s from './CardPacksElement.module.css'
 import ModalWindow from '../../../03-Components/SuperComponents/Modal/Modal';
 
 type CardPropsType = {
     pack: CardPacksType
-    updateCardPacks?: (cardsPack: CardPacksType) => void
-    removeCardPacks?: (id: string) => void
-    showBtn?: boolean
+    updateCardPacks: (cardsPack: CardPacksType) => void
+    removeCardPacks: (id: string) => void
 }
 
 const CardPacksElement: React.FC<CardPropsType> = (
@@ -18,7 +17,6 @@ const CardPacksElement: React.FC<CardPropsType> = (
         pack,
         updateCardPacks,
         removeCardPacks,
-        showBtn = true
     }) => {
 
     const onUpdateHandler = () => {
@@ -34,7 +32,7 @@ const CardPacksElement: React.FC<CardPropsType> = (
     const [titleCard, setTitleCard] = useState<string>('')
     //for delete
     const deleteModalHandlerYes = () => {
-        removeCardPacks && removeCardPacks(pack._id)
+        removeCardPacks(pack._id)
     }
     const deleteModalHandlerNo = () => {
         setActiveModalDelete(false)
@@ -59,12 +57,8 @@ const CardPacksElement: React.FC<CardPropsType> = (
             <div>{pack.cardsCount ? pack.cardsCount : `empty`}</div>
             <div>{pack.created}</div>
             <div>
-                {showBtn ?
-                    <>
-                        <button onClick={onUpdateHandler}>Update</button>
-                        <button onClick={onRemoveHandler}>Delete</button>
-                    </>
-                    : ''}
+                <button onClick={onUpdateHandler}>Update</button>
+                <button onClick={onRemoveHandler}>Delete</button>
             </div>
             <NavLink to={path.CARDS + '/' + pack._id}>ссылка</NavLink>
 
@@ -73,7 +67,6 @@ const CardPacksElement: React.FC<CardPropsType> = (
                 <button onClick={deleteModalHandlerYes}>Yes</button>
                 <button onClick={deleteModalHandlerNo}>No</button>
             </ModalWindow>
-
 
             <ModalWindow active={activeModalUpdate} setActive={setActiveModalUpdate}>
                 <p>Here You can do some changes</p>

@@ -3,7 +3,7 @@ import {loginReducer} from '../00-Redux/login-reducer';
 import {registrationReducer} from '../00-Redux/registration-reducer';
 import {profileReducer} from '../00-Redux/profile-reducer';
 import {appReducer} from '../00-Redux/app-reducer';
-import {cardsPackReducer} from '../00-Redux/cardsPack-reducer';
+import {cardPacksReducer} from '../00-Redux/card-packs-reducer';
 import {cardsReducer} from '../00-Redux/cards-reducer';
 import thunk from 'redux-thunk';
 
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
     registration: registrationReducer,
     profile: profileReducer,
     app: appReducer,
-    cardsPack: cardsPackReducer,
+    cardsPack: cardPacksReducer,
     cards: cardsReducer,
 })
 

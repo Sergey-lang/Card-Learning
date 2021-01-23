@@ -8,21 +8,21 @@
     border-radius: 2px;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
 }
+
 .card .heading {
     position: relative;
     height: 160px;
     color: #ffffff;
 }
+
 .card .heading h1 {
     position: absolute;
     bottom: 16px;
     left: 16px;
     font-size: 24px;
 }
+
 .card .content {
     padding: 16px;
-}
-.search{
-
 }
 

@@ -13,9 +13,9 @@ import Input from '../../03-Components/SuperComponents/Input/Input';
 import Button from '../../03-Components/SuperComponents/Button/Button';
 import DoubleRange from '../../03-Components/SuperComponents/DoubleRange/DoubleRange';
 import CardPacksElement from './CardPaksElement/CardPacksElement';
+import {Paginator} from '../../03-Components/Paginator/Paginator';
 
 import style from './CardPacks.module.css'
-import {Paginator} from '../../03-Components/Paginator/Paginator';
 
 export type queryParamsType = {
     packName?: string,
@@ -33,7 +33,7 @@ const CardPacks: React.FC = () => {
     const packsTotalCount = useSelector<RootStateType, number>(state => state.cardsPack.packsTotalCount)
 
     const [inputValue, setInputValue] = useState<string>('')
-    const [range, setRange] = useState([0, 15])
+    const [range, setRange] = useState([1, 15])
 
     const dispatch = useDispatch()
 

@@ -1,0 +1,8 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin-top: 15px;
+    padding: 5px;
+    border: 1px solid black;
+}

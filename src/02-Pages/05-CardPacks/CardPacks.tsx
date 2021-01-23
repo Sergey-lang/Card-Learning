@@ -13,8 +13,9 @@ import Input from '../../03-Components/SuperComponents/Input/Input';
 import Button from '../../03-Components/SuperComponents/Button/Button';
 import DoubleRange from '../../03-Components/SuperComponents/DoubleRange/DoubleRange';
 import CardPacksElement from './CardPaksElement/CardPacksElement';
-
 import style from './CardPacks.module.css'
+import ModalWindow from '../../03-Components/SuperComponents/Modal/Modal';
+
 
 export type queryParamsType = {
     packName?: string,
@@ -24,12 +25,13 @@ export type queryParamsType = {
 
 const CardPacks: React.FC = () => {
 
+
     const cardPacks = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
 
     const filter = useSelector<RootStateType, CardPacksFilterType>(state => state.cardsPack.filter)
 
     const [inputValue, setInputValue] = useState<string>('')
-    const [range, setRange] = useState([0, 15])
+    const [range, setRange] = useState([1, 15])
 
     const dispatch = useDispatch()
 
@@ -69,14 +71,21 @@ const CardPacks: React.FC = () => {
         dispatch(updateCardPacks(cardsPack))
     }
 
-    const removeCardPacks = (_id: string) => {
+    const removeCardPacks = (_id:string) => {
+       /* setActiveModal(true)*/
         dispatch(deleteCardPacks(_id))
     }
 
-    const mappedPacks = cardPacks.map((p: CardPacksType) => <CardPacksElement key={p._id}
-                                                                              pack={p}
-                                                                              updateCardPacks={changeCardPacks}
-                                                                              removeCardPacks={removeCardPacks}/>)
+
+    const mappedPacks = cardPacks.map((p: CardPacksType) =>
+        <div>
+            <CardPacksElement key={p._id}
+                              pack={p}
+                              updateCardPacks={changeCardPacks}
+                              removeCardPacks={removeCardPacks}/>
+
+        </div>
+    )
 
     return <div>
         <div className={style.search}>
@@ -87,6 +96,7 @@ const CardPacks: React.FC = () => {
             {
                 mappedPacks
             }
+
         </div>
     </div>
 }

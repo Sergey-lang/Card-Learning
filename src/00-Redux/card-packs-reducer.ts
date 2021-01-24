@@ -1,12 +1,12 @@
 import {Dispatch} from 'redux';
 import {ThunkDispatch} from 'redux-thunk';
-import {setAppStatusAC} from './app-reducer';
 import {RootStateType} from '../04-App/store';
 import {cardPacksAPI} from '../01-API/03-cardsPack-api';
+import {setAppStatus} from './appState-reducer';
 
 type ActionsType = ReturnType<typeof setCardPacks>
     | ReturnType<typeof setFilter>
-    | ReturnType<typeof setAppStatusAC>
+    | ReturnType<typeof setAppStatus>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setPacksTotalCount>
     | ReturnType<typeof createCardPacks>
@@ -95,11 +95,19 @@ export const getCardPacks = (requestPage: number, pageSize: number, filter: Card
 
     dispatch(setCurrentPage(requestPage))
     dispatch(setFilter(filter))
+    dispatch(setAppStatus({status: 'loading', error: null}))
 
     cardPacksAPI.getCardPacks(requestPage, pageSize, filter.packName, filter.min, filter.max, filter.userId)
         .then((res) => {
+            dispatch(setAppStatus({status: 'succeeded', error: null}))
             dispatch(setCardPacks(res.data.cardPacks))
             dispatch(setPacksTotalCount(res.data.cardPacksTotalCount))
+        })
+        .catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setAppStatus({status: 'failed', error: error}))
         })
 }
 
@@ -108,10 +116,18 @@ export const addCardPacks = (cardPacks: CardPacksType) => (dispatch: ThunkDispat
     const requestPage = getState().cardsPack.currentPage
     const pageSize = getState().cardsPack.pageSize
     const filter = getState().cardsPack.filter
+    dispatch(setAppStatus({status: 'loading', error: null}))
 
     cardPacksAPI.createCardsPack(cardPacks)
         .then((res) => {
+            dispatch(setAppStatus({status: 'succeeded', error: null}))
             dispatch(getCardPacks(requestPage, pageSize, filter))
+        })
+        .catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console');
+            dispatch(setAppStatus({status: 'failed', error: error}))
         })
 }
 
@@ -120,16 +136,18 @@ export const updateCardPacks = (cardsPack: CardPacksType) => (dispatch: ThunkDis
     const requestPage = getState().cardsPack.currentPage
     const pageSize = getState().cardsPack.pageSize
     const filter = getState().cardsPack.filter
+    dispatch(setAppStatus({status: 'loading', error: null}))
 
     cardPacksAPI.updateCardsPack(cardsPack)
         .then(res => {
+            dispatch(setAppStatus({status: 'succeeded', error: null}))
             dispatch(getCardPacks(requestPage, pageSize, filter))
         })
         .catch((e) => {
             const error = e.response
                 ? e.response.data.error
-                : (e.message + ', more details in the console')
-            console.log(error)
+                : (e.message + ', more details in the console');
+            dispatch(setAppStatus({status: 'failed', error: error}))
         })
 }
 
@@ -138,15 +156,17 @@ export const deleteCardPacks = (id: string) => (dispatch: ThunkDispatch<RootStat
     const requestPage = getState().cardsPack.currentPage
     const pageSize = getState().cardsPack.pageSize
     const filter = getState().cardsPack.filter
+    dispatch(setAppStatus({status: 'loading', error: null}))
 
     cardPacksAPI.deleteCardsPack(id)
         .then(res => {
+            dispatch(setAppStatus({status: 'succeeded', error: null}))
             dispatch(getCardPacks(requestPage, pageSize, filter))
         })
         .catch((e) => {
             const error = e.response
                 ? e.response.data.error
-                : (e.message + ', more details in the console')
-            console.log(error)
+                : (e.message + ', more details in the console');
+            dispatch(setAppStatus({status: 'failed', error: error}))
         })
 }

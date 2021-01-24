@@ -20,10 +20,15 @@ import Checkbox from '../../03-Components/SuperComponents/CheckBox/Checkbox';
 import DoubleRange from '../../03-Components/SuperComponents/DoubleRange/DoubleRange';
 
 import style from './CardPacks.module.css'
+import ErrorSnackBar from '../../03-Components/ErrorSnackBar/ErrorSnackBar';
+import ProgressBar from '../../03-Components/SuperComponents/ProgressBar/ProgressBar';
 
 const CardPacks: React.FC = () => {
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
     const cardPacks = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
+
+    const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
+    const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
 
     //filter data
     const packsTotalCount = useSelector<RootStateType, number>(state => state.cardsPack.packsTotalCount)
@@ -103,6 +108,9 @@ const CardPacks: React.FC = () => {
 
     return (
         <div>
+            {
+                appStatus === 'loading' && <ProgressBar/>
+            }
             <div className={style.search}>
                 <DoubleRange range={range} setRange={setRange}/>
                 <Input onChange={inputHandler}/>
@@ -119,6 +127,9 @@ const CardPacks: React.FC = () => {
                     mappedPacks
                 }
             </div>
+            {
+                error && <ErrorSnackBar errorMessage={error}/>
+            }
         </div>
     )
 }

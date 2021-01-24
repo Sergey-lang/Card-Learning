@@ -17,6 +17,10 @@ export const cardsAPI = {
     deleteCard(cardId: string) {
         return instance.delete<DeleteCardResponseType>(`cards/card/?id=${cardId}`);
     },
+
+    sendGrade(grade: number, card_id: string) {
+        return instance.put<UpdateGradeCardResponse>('cards/grade', {grade, card_id});
+    },
 }
 
 type GetCardsResponseType = {
@@ -37,4 +41,18 @@ type UpdatedCardResponseType = {
     updatedCard: {
         cardsPack_id: string
     }
+}
+
+export type UpdateGradeCard = {
+    grade: number
+    card_id: string
+}
+
+type UpdateGradeCardResponse = {
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: number
+    shots: number
 }

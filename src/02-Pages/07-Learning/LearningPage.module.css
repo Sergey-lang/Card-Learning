@@ -1,13 +1,13 @@
 .pageContainer {
     width: 100%;
 }
+
 .wrapper {
     font-size: 18px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     width: 350px;
-    height: 200px;
     background-color: #999797;
     color: #2b2b2b;
     justify-content: space-between;

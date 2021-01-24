@@ -4,12 +4,12 @@ import {RootStateType} from '../../04-App/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, useParams} from 'react-router-dom';
 import ErrorSnackBar from '../../03-Components/ErrorSnackBar/ErrorSnackBar';
-import {setAppErrorAC, setAppStatusAC} from '../../00-Redux/app-reducer';
 import {SendingForm} from '../../03-Components/SuperComponents/SendingForm/SendingForm';
 import {resetPassword} from '../../00-Redux/resetPassword-thunks';
 import ProgressBar from '../../03-Components/SuperComponents/ProgressBar/ProgressBar';
 
 import s from './Password.module.css'
+import {setAppStatus} from '../../00-Redux/appState-reducer';
 
 export const ResetPassword: React.FC = () => {
 
@@ -17,8 +17,8 @@ export const ResetPassword: React.FC = () => {
     const {token} = useParams<Record<string, string | undefined>>();
     const history = useHistory();
 
-    const appStatus = useSelector<RootStateType, string>((state) => state.app.statusResponse)
-    const error = useSelector<RootStateType, string | null>((state) => state.app.error)
+    const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
+    const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
 
     const tokenName = token ? token : ''
 
@@ -40,8 +40,7 @@ export const ResetPassword: React.FC = () => {
     useEffect(() => {
 
         return () => {
-            dispatch(setAppStatusAC('idle'))
-            dispatch(setAppErrorAC(null))
+            dispatch(setAppStatus({status: 'idle', error: null}))
         }
     }, [])
 

@@ -9,7 +9,6 @@ import Profile from '../02-Pages/04-Profile/Profile';
 import {useSelector} from 'react-redux';
 import {RootStateType} from './store';
 import ProgressBar from '../03-Components/SuperComponents/ProgressBar/ProgressBar';
-import {RequestStatusType} from '../00-Redux/app-reducer';
 import {ResetPassword} from '../02-Pages/03-Password/ResetPassword';
 import {PasswordRecovery} from '../02-Pages/03-Password/PasswordRecovery';
 import CardPacks from '../02-Pages/05-CardPacks/CardPacks';
@@ -30,19 +29,19 @@ export const path = {
     LEARNING: '/learning',
 }
 
-function App() {
+const App: React.FC = () => {
 
-    const statusApp = useSelector<RootStateType, RequestStatusType>(state => state.app.statusResponse)
+    const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
 
     return <div>
         <NavBar/>
-        {statusApp === 'loading' ? <ProgressBar/> : null}
+        {appStatus === 'loading' ? <ProgressBar/> : null}
 
         <Switch>
             <Route path={'/'} exact render={() => <AllComponents/>}/>
 
             <Route path={path.LOGIN} exact render={() => <Login/>}/>
-            <Route path={path.REG} exact render={() => <Registration statusApp={statusApp}/>}/>
+            <Route path={path.REG} exact render={() => <Registration/>}/>
             <Route path={path.PASSWORD} exact render={() => <ResetPassword/>}/>
             <Route path={path.PASS_REC} exact render={() => <PasswordRecovery/>}/>
             <Route path={path.PROFILE} exact render={() => <Profile/>}/>

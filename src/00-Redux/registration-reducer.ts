@@ -1,13 +1,11 @@
-import {Dispatch} from "redux";
-import {registrationAPI} from "../01-API/01-regestration-api";
-import {setAppErrorAC, setAppStatusAC} from './app-reducer';
+import {Dispatch} from 'redux';
+import {registrationAPI} from '../01-API/01-regestration-api';
+import {setAppStatus} from './appState-reducer';
 
-
-//Types
 type ActionsType = ReturnType<typeof setRegistrationAC>
     | ReturnType<typeof setRedirectProfileAC>
-    | ReturnType<typeof setAppStatusAC>
-    | ReturnType<typeof setAppErrorAC>
+    | ReturnType<typeof setAppStatus>
+
 type InitialStateType = {
     password: string
     email: string
@@ -45,59 +43,58 @@ export type ErrorResponseType = {
     }
 }
 
-//InitialState
 const initialState: InitialStateType = {
     password: '',
     email: '',
     isRedirect: false,
 }
 
-//Reducer
 export const registrationReducer = (state = initialState, actions: ActionsType): InitialStateType => {
     switch (actions.type) {
         case 'SET-REGISTRATION':
             return {...state, ...actions.regData}
-        case "SET-REDIRECT-PROFILE":
+        case 'SET-REDIRECT-PROFILE':
             return {...state, isRedirect: actions.isRedirect}
         default:
             return state
     }
 }
 
-//Actions
 export const setRegistrationAC = (regData: RegistrationRequestType) => ({type: 'SET-REGISTRATION', regData} as const)
 
 export const setRedirectProfileAC = (isRedirect: boolean) => ({type: 'SET-REDIRECT-PROFILE', isRedirect} as const)
 
-
-//Thunk
 export const registrationTC = (regData: RegistrationRequestType) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatus({status: 'loading', error: null}))
     registrationAPI().registration({...regData})
         .then((res) => {
-            dispatch(setAppStatusAC('succeeded'))
+            dispatch(setAppStatus({status: 'succeeded', error: null}))
             const dataAboutUser = res.data.addedUser
-            // Если не происходит редирект после того как зарегались проблема ниже . Этот код считает длинну объекта ,всего там 10 ключей. Смотрел
             if (Object.keys(dataAboutUser).length === 10) {
-                // debugger
                 dispatch(setRegistrationAC({...regData}))
                 dispatch(setRedirectProfileAC(true))
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatus({status: 'succeeded', error: null}))
             }
         })
         .catch((error: ErrorResponseType) => {
-            dispatch(setAppStatusAC('loading'))
+            dispatch(setAppStatus({status: 'loading', error: null}))
             if (error.response.data.in === 'createUser') {
-                dispatch(setAppErrorAC(error.response.data.error))
-                dispatch(setAppStatusAC('failed'))
+                dispatch(setAppStatus({
+                    status: 'failed',
+                    error: error.response.data.error
+                }))
             }
             if (!error.response.data.isEmailValid) {
-                dispatch(setAppErrorAC(error.response.data.error))
-                dispatch(setAppStatusAC('failed'))
+                dispatch(setAppStatus({
+                    status: 'failed',
+                    error: error.response.data.error
+                }))
             }
             if (!error.response.data.isPassValid) {
-                error.response.data.passwordRegExp && dispatch(setAppErrorAC(error.response.data.passwordRegExp))
-                dispatch(setAppStatusAC('failed'))
+                error.response.data.passwordRegExp && dispatch(setAppStatus({
+                    status: 'failed',
+                    error: error.response.data.passwordRegExp
+                }))
             }
         })
 }

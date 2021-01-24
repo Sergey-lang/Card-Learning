@@ -1,14 +1,13 @@
 import {Dispatch} from 'redux';
-import {setAppStatusAC} from './app-reducer';
-import {cardsAPI, UpdateGradeCard} from '../01-API/04-cards-api';
+import {cardsAPI} from '../01-API/04-cards-api';
 import {ThunkDispatch} from 'redux-thunk';
 import {RootStateType} from '../04-App/store';
+import {setAppStatus} from './appState-reducer';
 
-type ActionsType =
-    ReturnType<typeof setCards> |
-    ReturnType<typeof setFilter> |
-    ReturnType<typeof setAppStatusAC> |
-    ReturnType<typeof createCard>
+type ActionsType = ReturnType<typeof setCards>
+    | ReturnType<typeof setFilter>
+    | ReturnType<typeof setAppStatus>
+    | ReturnType<typeof createCard>
 
 export type CardType = {
     answer: string,
@@ -72,23 +71,29 @@ export const setFilter = (filter: CardsFilterType) => ({
 
 //Thunks
 export const getCards = (cardsPackId: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setAppStatus({status: 'loading', error: null}))
     cardsAPI.getCards(cardsPackId)
         .then(res => {
+            dispatch(setAppStatus({status: 'succeeded', error: null}))
             dispatch(setCards(res.data.cards))
         })
 }
 
 export const addCard = (card: CardType) => (dispatch: ThunkDispatch<RootStateType, unknown, ActionsType>) => {
+    dispatch(setAppStatus({status: 'loading', error: null}))
     cardsAPI.createCard(card)
         .then(res => {
+            dispatch(setAppStatus({status: 'succeeded', error: null}))
             dispatch(getCards(card.cardsPack_id))
             console.log(card)
         })
 }
 
 export const updateCard = (card: CardType) => (dispatch: ThunkDispatch<RootStateType, unknown, ActionsType>) => {
+    dispatch(setAppStatus({status: 'loading', error: null}))
     cardsAPI.updateCard(card)
         .then(res => {
+            dispatch(setAppStatus({status: 'succeeded', error: null}))
             const packId = res.data.updatedCard.cardsPack_id
             dispatch(getCards(packId))
         })
@@ -101,8 +106,10 @@ export const updateCard = (card: CardType) => (dispatch: ThunkDispatch<RootState
 }
 
 export const deleteCard = (id: string) => (dispatch: ThunkDispatch<RootStateType, unknown, ActionsType>) => {
+    dispatch(setAppStatus({status: 'loading', error: null}))
     cardsAPI.deleteCard(id)
         .then(res => {
+            dispatch(setAppStatus({status: 'succeeded', error: null}))
             const packId = res.data.deletedCard.cardsPack_id
             dispatch(getCards(packId))
         })
@@ -114,15 +121,16 @@ export const deleteCard = (id: string) => (dispatch: ThunkDispatch<RootStateType
         })
 }
 
-export const sendGrade = (card: UpdateGradeCard) => (dispatch: ThunkDispatch<RootStateType, unknown, ActionsType>) => {
-    cardsAPI.sendGrade(card)
+export const sendGrade = (grade: number, card_id: string) => (dispatch: ThunkDispatch<RootStateType, unknown, ActionsType>) => {
+    dispatch(setAppStatus({status: 'loading', error: null}))
+    cardsAPI.sendGrade(grade, card_id)
         .then(res => {
-            console.log(res.data)
+            dispatch(setAppStatus({status: 'succeeded', error: 'Отправлено'}))
         })
         .catch((e) => {
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console')
-            console.log(error)
+            dispatch(setAppStatus({status: 'succeeded', error: error}))
         })
 }

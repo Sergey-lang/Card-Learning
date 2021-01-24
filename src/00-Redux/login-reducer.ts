@@ -1,11 +1,10 @@
 import {Dispatch} from 'redux';
 import {authAPI} from '../01-API/00-login-api';
-import {setAppErrorAC, setAppStatusAC} from './app-reducer';
+import {setAppStatus} from './appState-reducer';
 
 type ActionsType = ReturnType<typeof isAuth>
-    | ReturnType<typeof setAppStatusAC>
+    | ReturnType<typeof setAppStatus>
     | ReturnType<typeof setUserData>
-    | ReturnType<typeof setAppErrorAC>
 
 export type UserDataType = {
     _id: string,
@@ -42,31 +41,29 @@ export const isAuth = (isAuth: boolean) => ({type: 'CARDS/LOGIN/IS-AUTH', isAuth
 export const setUserData = (data: UserDataType) => ({type: 'CARDS/LOGIN/SET_USER_DATA', data}) as const
 
 export const getAuthUserData = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatus({status: 'loading', error: null}))
     authAPI.login(email, password, rememberMe)
         .then(res => {
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatus({status: 'succeeded', error: null}))
                 dispatch(isAuth(true))
                 dispatch(setUserData(res.data))
             }
         ).catch((e) => {
         const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
-        dispatch(setAppErrorAC(error))
-        dispatch(setAppStatusAC('failed'))
+        dispatch(setAppStatus({status: 'failed', error: error}))
     })
 }
 export const deleteAuthUserData = () => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatus({status: 'loading', error: null}))
     authAPI.logout()
         .then(res => {
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatus({status: 'succeeded', error: null}))
                 dispatch(isAuth(false))
                 alert(res.data.info)
             }
         ).catch((e) => {
         const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
-        dispatch(setAppStatusAC('failed'))
-        alert(error)
+        dispatch(setAppStatus({status: 'failed', error: error}))
     })
 }
 

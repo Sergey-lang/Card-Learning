@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootStateType} from '../../04-App/store';
-import Input from '../../03-Components/SuperComponents/Input/Input';
 import Button from '../../03-Components/SuperComponents/Button/Button';
 
 import style from './Cards.module.css'
@@ -32,13 +31,13 @@ const Cards: React.FC = () => {
 
     //fake obj for creating
     const cardTestObj: CardType = {
-        _id:genID(2),
+        _id: genID(2),
         type: 'Java',
-        question: 'fake quessssstion',
-        answer: `fake answerrrrr`,
+        question: 'Fake questions for you?',
+        answer: `YES`,
         cardsPack_id: id,
         grade: 4.54654,
-        rating:0
+        rating: 0
     }
 
     const onAddCard = () => {

@@ -18,8 +18,8 @@ export const cardsAPI = {
         return instance.delete<DeleteCardResponseType>(`cards/card/?id=${cardId}`);
     },
 
-    sendGrade(card: UpdateGradeCard) {
-        return instance.put<UpdateGradeCardResponse>('cards/grade', {card});
+    sendGrade(grade: number, card_id: string) {
+        return instance.put<UpdateGradeCardResponse>('cards/grade', {grade, card_id});
     },
 }
 

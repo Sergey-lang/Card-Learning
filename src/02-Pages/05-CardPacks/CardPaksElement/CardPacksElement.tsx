@@ -60,6 +60,7 @@ const CardPacksElement: React.FC<CardPropsType> = (
                 <button onClick={onUpdateHandler}>Update</button>
                 <button onClick={onRemoveHandler}>Delete</button>
             </div>
+            <NavLink to={path.LEARNING + '/' + pack._id}>учить</NavLink>
             <NavLink to={path.CARDS + '/' + pack._id}>ссылка</NavLink>
 
             <ModalWindow active={activeModalDelete} setActive={setActiveModalDelete}>

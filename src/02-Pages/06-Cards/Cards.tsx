@@ -32,9 +32,13 @@ const Cards: React.FC = () => {
 
     //fake obj for creating
     const cardTestObj: CardType = {
-        _id: genID(2),
-        question: 'How is it work??!!!',
+        _id:genID(2),
+        type: 'Java',
+        question: 'fake quessssstion',
+        answer: `fake answerrrrr`,
         cardsPack_id: id,
+        grade: 4.54654,
+        rating:0
     }
 
     const onAddCard = () => {

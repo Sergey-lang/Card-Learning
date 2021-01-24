@@ -16,6 +16,7 @@ import CardPacks from '../02-Pages/05-CardPacks/CardPacks';
 import Cards from '../02-Pages/06-Cards/Cards';
 
 import './App.css';
+import LearningPage from '../02-Pages/07-Learning/LearningPage';
 
 export const path = {
     LOGIN: '/login',
@@ -26,6 +27,7 @@ export const path = {
     ALL_COMPONENTS: '/allComponents',
     CARD_PACKS: '/card_packs',
     CARDS: '/cards',
+    LEARNING: '/learning',
 }
 
 function App() {
@@ -46,6 +48,7 @@ function App() {
             <Route path={path.PROFILE} exact render={() => <Profile/>}/>
             <Route path={path.CARD_PACKS} exact render={() => <CardPacks/>}/>
             <Route path={path.CARDS + '/:id'} exact render={() => <Cards/>}/>
+            <Route path={path.LEARNING + '/:id'} exact render={() => <LearningPage/>}/>
 
             <Route path={'/404'} render={() => <NotFound/>}/>
             <Redirect from={'*'} to={'/404'}/>

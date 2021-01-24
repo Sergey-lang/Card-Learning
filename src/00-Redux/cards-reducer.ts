@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux';
 import {setAppStatusAC} from './app-reducer';
-import {cardsAPI} from '../01-API/04-cards-api';
+import {cardsAPI, UpdateGradeCard} from '../01-API/04-cards-api';
 import {ThunkDispatch} from 'redux-thunk';
 import {RootStateType} from '../04-App/store';
 
@@ -11,13 +11,13 @@ type ActionsType =
     ReturnType<typeof createCard>
 
 export type CardType = {
-    answer?: string,
-    question?: string,
+    answer: string,
+    question: string,
     cardsPack_id: string,
-    grade?: null,
-    rating?: number,
+    grade: number,
+    rating: number,
     shots?: number,
-    type?: string,
+    type: string,
     user_id?: string,
     created?: string,
     updated?: string,
@@ -105,6 +105,19 @@ export const deleteCard = (id: string) => (dispatch: ThunkDispatch<RootStateType
         .then(res => {
             const packId = res.data.deletedCard.cardsPack_id
             dispatch(getCards(packId))
+        })
+        .catch((e) => {
+            const error = e.response
+                ? e.response.data.error
+                : (e.message + ', more details in the console')
+            console.log(error)
+        })
+}
+
+export const sendGrade = (card: UpdateGradeCard) => (dispatch: ThunkDispatch<RootStateType, unknown, ActionsType>) => {
+    cardsAPI.sendGrade(card)
+        .then(res => {
+            console.log(res.data)
         })
         .catch((e) => {
             const error = e.response

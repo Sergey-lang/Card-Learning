@@ -14,9 +14,10 @@ type LoginPropsType = {}
 
 const Login: React.FC<LoginPropsType> = React.memo(() => {
     const dispatch = useDispatch()
-    let isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
-    let error = useSelector<RootStateType, string | null>(state => state.app.error)
-    let statusResponse = useSelector<RootStateType, string>(state => state.app.statusResponse)
+    const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
+
+    const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
+    const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
 
     let [email, setEmail] = useState<string>('')
     let [password, setPassword] = useState<string>('')
@@ -44,7 +45,7 @@ const Login: React.FC<LoginPropsType> = React.memo(() => {
                    onChange={onclickPassword}/>
             <Checkbox title={'Remember me'}
                       onChange={onclickCheckbox}/>
-            <Button disabled={statusResponse === 'loading'} onClick={onclickHandler}> SIGN IN </Button>
+            <Button disabled={appStatus === 'loading'} onClick={onclickHandler}> SIGN IN </Button>
         </form>
         <span>
             <NavLink to={path.PASS_REC}> Forget password</NavLink>

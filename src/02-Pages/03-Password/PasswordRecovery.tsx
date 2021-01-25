@@ -3,19 +3,19 @@ import React, {useEffect} from 'react';
 import {RootStateType} from '../../04-App/store';
 import {useDispatch, useSelector} from 'react-redux';
 import ErrorSnackBar from '../../03-Components/ErrorSnackBar/ErrorSnackBar';
-import {setAppErrorAC, setAppStatusAC} from '../../00-Redux/app-reducer';
 import ProgressBar from '../../03-Components/SuperComponents/ProgressBar/ProgressBar';
 import {SendingForm} from '../../03-Components/SuperComponents/SendingForm/SendingForm';
 import {sendRecoveryEmail} from '../../00-Redux/resetPassword-thunks';
 
 import s from './Password.module.css'
+import {setAppStatus} from '../../00-Redux/appState-reducer';
 
 export const PasswordRecovery: React.FC = () => {
 
     const dispatch = useDispatch()
 
-    const appStatus = useSelector<RootStateType, string>((state) => state.app.statusResponse)
-    const error = useSelector<RootStateType, string | null>((state) => state.app.error)
+    const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
+    const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
 
     const sendEmail = (email: string) => {
         dispatch(sendRecoveryEmail(email))
@@ -25,8 +25,7 @@ export const PasswordRecovery: React.FC = () => {
     useEffect(() => {
 
         return () => {
-            dispatch(setAppStatusAC('idle'))
-            dispatch(setAppErrorAC(null))
+            dispatch(setAppStatus({status: 'idle', error: null}))
         }
     }, [])
 

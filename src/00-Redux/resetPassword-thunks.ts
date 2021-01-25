@@ -1,46 +1,42 @@
 import {Dispatch} from 'redux';
 import {passwordAPI} from '../01-API/02-password-api';
-import {setAppErrorAC, setAppStatusAC} from './app-reducer';
+import {setAppStatus} from './appState-reducer';
 
-//Thunk
 export const sendRecoveryEmail = (email: string) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatus({status: 'loading', error: null}))
     passwordAPI.recover(email)
         .then(res => {
             if (res.status === 200) {
-                dispatch(setAppStatusAC('succeeded'))
-                dispatch(setAppErrorAC(`if account "${email}" exist, an email will be sent with further instruction`))
+                dispatch(setAppStatus({
+                    status: 'succeeded',
+                    error: `if account "${email}" exist, an email will be sent with further instruction`
+                }))
             } else {
-                dispatch(setAppStatusAC('failed'))
-                dispatch(setAppErrorAC('Something went wrong:('))
+                dispatch(setAppStatus({status: 'failed', error: 'Something went wrong:('}))
             }
         })
         .catch((e) => {
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
-            dispatch(setAppStatusAC('failed'))
-            dispatch(setAppErrorAC(error))
+            dispatch(setAppStatus({status: 'failed', error: error}))
         })
 }
 
 export const resetPassword = (password: string, token: string | undefined) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatus({status: 'loading', error: null}))
     passwordAPI.resetPassword(password, token)
         .then(res => {
             if (res.status === 200) {
-                dispatch(setAppStatusAC('succeeded'))
-                dispatch(setAppErrorAC('The password change is successful'))
+                dispatch(setAppStatus({status: 'succeeded', error: 'The password change is successful'}))
             } else {
-                dispatch(setAppStatusAC('failed'))
-                dispatch(setAppErrorAC('Something went wrong:('))
+                dispatch(setAppStatus({status: 'failed', error: 'Something went wrong:('}))
             }
         })
         .catch((e) => {
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
-            dispatch(setAppStatusAC('failed'))
-            dispatch(setAppErrorAC(error))
+            dispatch(setAppStatus({status: 'failed', error: error}))
         })
 }

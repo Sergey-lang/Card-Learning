@@ -16,9 +16,13 @@ const CardElement: React.FC<CardPropsType> = (
 
     const onUpdateHandler = () => {
         updateCard({
-            cardsPack_id: card.cardsPack_id,
             _id: card._id,
-            question: 'new cart Ozz-z-z',
+            type: 'Java',
+            question: 'fake quessssstion',
+            answer: `fake answerrrrr`,
+            cardsPack_id: card.cardsPack_id,
+            grade: 4.54654,
+            rating:0
         })
     }
 
@@ -29,7 +33,10 @@ const CardElement: React.FC<CardPropsType> = (
     return (
         <div className={s.wrapper}>
             <div>{card.user_id}</div>
-            <div>{card.question ? card.question : 'empty'}</div>
+            <div>{card.question ? card.question : 'empty question'}</div>
+            <div>{card.answer ? card.answer : 'empty answer'}</div>
+            <div>{card.type ? card.type : 'empty type'}</div>
+            <div>{card.grade}</div>
             <div>{card.created}</div>
             <button onClick={onUpdateHandler}>Update</button>
             <button onClick={onRemoveHandler}>Delete</button>

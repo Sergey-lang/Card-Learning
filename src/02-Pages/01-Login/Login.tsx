@@ -15,7 +15,6 @@ type LoginPropsType = {}
 const Login: React.FC<LoginPropsType> = React.memo(() => {
     const dispatch = useDispatch()
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
-
     const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
     const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
 
@@ -31,7 +30,7 @@ const Login: React.FC<LoginPropsType> = React.memo(() => {
         dispatch(getAuthUserData(email, password, rememberMe))
     }, [email, password, rememberMe, dispatch])
     if (isAuth) {
-        return <Redirect to={path.PROFILE}/>
+        return <Redirect to={'/'}/>
     }
     return <div className={style.wrapper}>
         <h1>Sign In</h1>

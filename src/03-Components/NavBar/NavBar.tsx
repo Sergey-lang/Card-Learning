@@ -4,6 +4,7 @@ import style from './NavBar.module.css'
 import {path} from '../../04-App/App';
 import Logout from '../../02-Pages/01-Login/Logout';
 
+
 const NavBar: React.FC = () => {
     return <div className={style.header}>
         <input type="checkbox" className={style.openSidebarMenu} id="openSidebarMenu"/>

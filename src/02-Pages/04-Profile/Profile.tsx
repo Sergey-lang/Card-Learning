@@ -2,19 +2,27 @@ import React from 'react';
 import style from './Profile.module.css';
 import {useSelector} from 'react-redux';
 import {RootStateType} from '../../04-App/store';
-import UserIsNotAuthorized from '../01-Login/UserIsNotAuthorized';
+import { Redirect } from 'react-router-dom';
+import {path} from '../../04-App/App';
+
+
 
 
 type ProfilePropsType = {}
 
 const Profile: React.FC<ProfilePropsType> = () => {
-    //let profileData = useSelector<RootStateType, UserDataType | {}>(state => state.login.user)
+    //const profileData = useSelector<RootStateType>(state => state)
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
+    if (!isAuth) {
+        return <Redirect to={path.LOGIN} />
+    }
 
     return <div className={style.wrapper}>
-        {!isAuth
-            ? <UserIsNotAuthorized/>
-            : <h1>Profile</h1>}
+
+             <div>
+                <h1>Profile</h1>
+                <p>user name</p>
+               </div>
     </div>
 };
 

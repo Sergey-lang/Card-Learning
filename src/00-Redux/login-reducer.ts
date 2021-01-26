@@ -53,6 +53,23 @@ export const getAuthUserData = (email: string, password: string, rememberMe: boo
         dispatch(setAppStatus({status: 'failed', error: error}))
     })
 }
+
+
+export const authUser = () => (dispatch: Dispatch) => {
+    dispatch(setAppStatus({status: 'loading', error: null}))
+    authAPI.getAuth()
+        .then(res => {
+                dispatch(setAppStatus({status: 'succeeded', error: null}))
+                dispatch(isAuth(true))
+                dispatch(setUserData(res.data))
+            }
+        ).catch((e) => {
+        const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
+        dispatch(setAppStatus({status: 'failed', error: error}))
+    })
+}
+
+
 export const deleteAuthUserData = () => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatus({status: 'loading', error: null}))
     authAPI.logout()
@@ -66,4 +83,3 @@ export const deleteAuthUserData = () => (dispatch: Dispatch<ActionsType>) => {
         dispatch(setAppStatus({status: 'failed', error: error}))
     })
 }
-

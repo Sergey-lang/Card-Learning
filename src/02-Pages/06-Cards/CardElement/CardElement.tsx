@@ -1,7 +1,8 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import {CardType} from '../../../00-Redux/cards-reducer';
 import s from './CardElement.module.css'
-import ModalWindow from '../../../03-Components/SuperComponents/Modal/Modal';
+import ModalForDelete from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForDelete';
+import ModalForUpdateCard from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForUpdateCard';
 
 type CardPropsType = {
     card: CardType
@@ -17,16 +18,14 @@ const CardElement: React.FC<CardPropsType> = (
     //for modal
     const [activeModalDelete, setActiveModalDelete] = useState<boolean>(false)
     const [activeModalUpdate, setActiveModalUpdate] = useState<boolean>(false)
-    const [questionCard, setQuestionCard] = useState<string>(card.question)
-    const [answerCard, setAnswerCard] = useState<string>(card.answer)
+    const [questionCard, setQuestionCard] = useState<string>('')
+    const [answerCard, setAnswerCard] = useState<string>('')
 
     //for delete
     const deleteModalHandlerYes = () => {
         removeCard(card._id)
     }
-    const deleteModalHandlerNo = () => {
-        setActiveModalDelete(false)
-    }
+
     //for update
     const updateModalHandler = () => {
         updateCard({
@@ -36,19 +35,8 @@ const CardElement: React.FC<CardPropsType> = (
             answer: answerCard,
             cardsPack_id: card.cardsPack_id,
             grade: 4.54654,
-            rating:0
+            rating: 0
         })
-        setActiveModalUpdate(false)
-    }
-    const handlerForUpdateQuestionCard = (e: ChangeEvent<HTMLInputElement>) => {
-        setQuestionCard(e.currentTarget.value)
-
-    }
-    const handlerForUpdateAnswerCard = (e: ChangeEvent<HTMLInputElement>) => {
-        setAnswerCard(e.currentTarget.value)
-
-    }
-    const updateModalHandlerCancel = () => {
         setActiveModalUpdate(false)
     }
 
@@ -59,7 +47,6 @@ const CardElement: React.FC<CardPropsType> = (
     const onRemoveHandler = () => {
         setActiveModalDelete(true)
     }
-
 
     return (
         <div className={s.wrapper}>
@@ -72,20 +59,12 @@ const CardElement: React.FC<CardPropsType> = (
             <button onClick={onUpdateHandler}>Update</button>
             <button onClick={onRemoveHandler}>Delete</button>
 
-            <ModalWindow active={activeModalDelete} setActive={setActiveModalDelete}>
-                <p>Are you sure?</p>
-                <button onClick={deleteModalHandlerYes}>Yes</button>
-                <button onClick={deleteModalHandlerNo}>No</button>
-            </ModalWindow>
+            <ModalForDelete active={activeModalDelete} setActive={setActiveModalDelete}
+                            deleteModalHandlerYes={deleteModalHandlerYes}/>
 
-            <ModalWindow active={activeModalUpdate} setActive={setActiveModalUpdate}>
-                <p>Here You can do some changes</p>
-                <input type={'text'} onChange={handlerForUpdateQuestionCard}/>
-                <input type={'text'} onChange={handlerForUpdateAnswerCard}/>
-                <button onClick={updateModalHandler}>Update</button>
-                <button onClick={updateModalHandlerCancel}>Cancel</button>
-            </ModalWindow>
-
+            <ModalForUpdateCard active={activeModalUpdate} setActive={setActiveModalUpdate}
+                                setQuestionCard={setQuestionCard} setAnswerCard={setAnswerCard}
+                                updateModalHandler={updateModalHandler}/>
         </div>
     )
 }

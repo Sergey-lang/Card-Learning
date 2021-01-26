@@ -44,6 +44,7 @@ const CardPacks: React.FC = () => {
 
     const dispatch = useDispatch()
 
+
     //get all packs
     useEffect(() => {
         dispatch(getCardPacks(currentPage, pageSize, filter))

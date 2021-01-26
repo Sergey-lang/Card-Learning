@@ -1,12 +1,13 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootStateType} from '../../04-App/store';
 import Button from '../../03-Components/SuperComponents/Button/Button';
 import style from './Cards.module.css'
 import {addCard, CardType, deleteCard, getCards, updateCard} from '../../00-Redux/cards-reducer';
-import {useParams} from 'react-router-dom';
+import {Redirect, useParams} from 'react-router-dom';
 import CardElement from './CardElement/CardElement';
-import ModalWindow from '../../03-Components/SuperComponents/Modal/Modal';
+import ModalForAddCards from '../../03-Components/SuperComponents/Modal/ModalForCards/ModalForAddCard';
+import {path} from '../../04-App/App';
 
 const Cards: React.FC = () => {
 
@@ -15,10 +16,14 @@ const Cards: React.FC = () => {
     const cards = useSelector<RootStateType, CardType[]>(state => state.cards.cards)
 
     const dispatch = useDispatch()
-
+    //for modal
     const [activeModalAdd, setActiveModalAdd] = useState<boolean>(false)
     const [newQuestionCard, setNewQuestionCard] = useState<string>('')
     const [newAnswerCard, setNewAnswerCard] = useState<string>('')
+    const [typeNewCard, setTypeNewCard] = useState<string>('undefined')
+
+    const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
+
 
     //request on start, data from redux
     useEffect(() => {
@@ -36,7 +41,7 @@ const Cards: React.FC = () => {
     //fake obj for creating
     const cardTestObj: CardType = {
         _id: genID(2),
-        type: 'Java',
+        type: typeNewCard,
         question: newQuestionCard,
         answer: newAnswerCard,
         cardsPack_id: id,
@@ -55,21 +60,12 @@ const Cards: React.FC = () => {
         dispatch(addCard(cardTestObj))
         setActiveModalAdd(false)
     }
-    const addCardHandlerCancel = () => {
-        setActiveModalAdd(false)
-    }
+
     const removeCard = (id: string) => {
         dispatch(deleteCard(id))
     }
-    const handlerForAddQuestionCard = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewQuestionCard(e.currentTarget.value)
 
-    }
-    const handlerForAddAnswerCard = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewAnswerCard(e.currentTarget.value)
-
-    }
-
+    if (!isAuth) return <Redirect to={path.LOGIN}/>
     const mappedCards = cards.map((card: CardType) => <CardElement key={card._id}
                                                                    card={card}
                                                                    updateCard={changeCard}
@@ -82,13 +78,9 @@ const Cards: React.FC = () => {
                 mappedCards
             }
         </div>
-        <ModalWindow active={activeModalAdd} setActive={setActiveModalAdd}>
-            <p>Add new card</p>
-            QUESTION<input type={'text'} onChange={handlerForAddQuestionCard}/>
-            ANSWER <input type={'text'} onChange={handlerForAddAnswerCard}/>
-            <button onClick={addCardHandler}>ADD</button>
-            <button onClick={addCardHandlerCancel}>Cancel</button>
-        </ModalWindow>
+        <ModalForAddCards active={activeModalAdd} setActive={setActiveModalAdd} addCardHandler={addCardHandler}
+                          setNewQuestionCard={setNewQuestionCard} setNewAnswerCard={setNewAnswerCard}
+                          setTypeNewCard={setTypeNewCard}/>
     </div>
 }
 

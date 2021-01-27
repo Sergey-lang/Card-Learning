@@ -74,9 +74,8 @@ export const deleteAuthUserData = () => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatus({status: 'loading', error: null}))
     authAPI.logout()
         .then(res => {
-                dispatch(setAppStatus({status: 'succeeded', error: null}))
                 dispatch(isAuth(false))
-                alert(res.data.info)
+                dispatch(setAppStatus({status: 'failed', error: res.data.info}))
             }
         ).catch((e) => {
         const error = e.response ? e.response.data.error : (e.message + ', more details in the console')

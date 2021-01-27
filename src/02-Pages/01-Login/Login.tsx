@@ -1,14 +1,15 @@
 import React, {ChangeEvent, useCallback, useState} from 'react';
-import style from './Login.module.css';
+import stylesContainer from './../../03-Components/container/container.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootStateType} from '../../04-App/store';
 import {NavLink, Redirect} from 'react-router-dom';
 import {getAuthUserData} from '../../00-Redux/login-reducer';
-import Input from '../../03-Components/SuperComponents/Input/Input';
-import Checkbox from '../../03-Components/SuperComponents/CheckBox/Checkbox';
-import Button from '../../03-Components/SuperComponents/Button/Button';
-import {path} from '../../04-App/App';
-import ErrorSnackBar from '../../03-Components/ErrorSnackBar/ErrorSnackBar';
+import UniversalButton from '../../03-Components/SuperComponents/Button/FornButton/UniversalButton';
+import UniversalInputText from '../../03-Components/SuperComponents/InputText/UniversalInputText';
+import UniversalCheckbox from '../../03-Components/SuperComponents/DoubleRange/Checkbox/UniversalCheckbox';
+import {path} from '../../04-App/Routes/Routes';
+import s from '../01-Login/Login.module.css';
+
 
 type LoginPropsType = {}
 
@@ -16,7 +17,7 @@ const Login: React.FC<LoginPropsType> = React.memo(() => {
     const dispatch = useDispatch()
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
     const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
-    const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
+
 
     let [email, setEmail] = useState<string>('')
     let [password, setPassword] = useState<string>('')
@@ -24,7 +25,6 @@ const Login: React.FC<LoginPropsType> = React.memo(() => {
 
     let onclickEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => setEmail(e.currentTarget.value), [setEmail])
     let onclickPassword = useCallback((e: ChangeEvent<HTMLInputElement>) => setPassword(e.currentTarget.value), [setPassword])
-    let onclickCheckbox = useCallback((e: ChangeEvent<HTMLInputElement>) => setRememberMe(e.currentTarget.checked), [setRememberMe])
 
     let onclickHandler = useCallback(() => {
         dispatch(getAuthUserData(email, password, rememberMe))
@@ -32,26 +32,23 @@ const Login: React.FC<LoginPropsType> = React.memo(() => {
     if (isAuth) {
         return <Redirect to={'/'}/>
     }
-    return <div className={style.wrapper}>
-        <h1>Sign In</h1>
-        {error && <ErrorSnackBar errorMessage={error}/>}
-        <form className={style.loginForm}>
-            <Input type={'email'}
-                   placeholder={'Enter email'}
-                   onChange={onclickEmail}/>
-            <Input type={'password'}
-                   placeholder={'03-Password'}
-                   onChange={onclickPassword}/>
-            <Checkbox title={'Remember me'}
-                      onChange={onclickCheckbox}/>
-            <Button disabled={appStatus === 'loading'} onClick={onclickHandler}> SIGN IN </Button>
-        </form>
-        <span>
-            <NavLink to={path.PASS_REC}> Forget password</NavLink>
-            <NavLink to={path.REG}> Registration </NavLink>
-        </span>
-
+    return <div className={stylesContainer.container}>
+        <h4>SIGN IN</h4>
+        <div className={stylesContainer.inner}>
+            <UniversalInputText type={'email'}
+                                placeholder={'Enter email'}
+                                onChange={onclickEmail}/>
+            <UniversalInputText type={'password'}
+                                placeholder={'Password'}
+                                onChange={onclickPassword}/>
+            <UniversalCheckbox onChangeChecked={setRememberMe}>Remember me</UniversalCheckbox>
+            <UniversalButton disabled={appStatus === 'loading'} onClick={onclickHandler}> SUBMIT </UniversalButton>
+            <hr/>
+            <p>Not registered? <NavLink to={path.REG} activeClassName={stylesContainer.activeLink} className={s.inactive}>Create an Account.</NavLink></p>
+            <p>Forgot password? <NavLink to={path.PASS_REC} activeClassName={stylesContainer.activeLink}  className={s.inactive}>Click here to recover.</NavLink></p>
+        </div>
     </div>
+
 });
 
 export default Login;

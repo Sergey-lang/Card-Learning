@@ -1,0 +1,22 @@
+.superInput {
+    margin: 10px 0;
+    padding: 6px;
+    height: 35px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight:400;
+    color: #a9a9a9;
+    border: 1px solid rgba(169, 169, 169, 0.4);
+    border-radius: 5px;
+    width: 95%;
+    font-family: Poppins, sans-serif;
+}
+
+.errorInput {
+    border: 3px solid #ee1e1e;
+    background: #e5eeee;
+}
+
+.error {
+    color: #d90a2c;
+}

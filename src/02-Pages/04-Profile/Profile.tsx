@@ -1,10 +1,10 @@
 import React from 'react';
-import style from './Profile.module.css';
 import {useSelector} from 'react-redux';
 import {RootStateType} from '../../04-App/store';
 import {Redirect} from 'react-router-dom';
-import {path} from '../../04-App/App';
 import {UserDataType} from '../../00-Redux/login-reducer';
+import {path} from '../../04-App/Routes/Routes';
+import stylesContainer from '../../03-Components/container/container.module.css';
 
 
 type ProfilePropsType = {}
@@ -17,12 +17,16 @@ const Profile: React.FC<ProfilePropsType> = () => {
         return <Redirect to={path.LOGIN}/>
     }
 
-    return <div className={style.wrapper}>
+    return <div className={stylesContainer.container}>
 
         <div>
-            <h1>Profile</h1>
-            <p>user name{profileData.name}</p>
+            <h4>PROFILE</h4>
+
+            <div className={stylesContainer.inner}>
+            <p>user name:{profileData.name}</p>
+                <hr/>
             <p>cards packs count{profileData.publicCardPacksCount}</p>
+            </div>
         </div>
     </div>
 };

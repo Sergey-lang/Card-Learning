@@ -1,3 +1,43 @@
+.search {
+    display: flex;
+    min-height: 70%;
+    width: 30%;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 15px;
+    flex-wrap: wrap;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+}
+.paginator{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+}
+.cards{
+    width: 60%;
+    padding: 15px;
+    flex-wrap: wrap;
+}
+
+.table{
+    width: 95%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .card {
     display: inline-block;
     margin: 8px;

@@ -1,8 +1,8 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import style from './NavBar.module.css'
-import {path} from '../../04-App/App';
 import Logout from '../../02-Pages/01-Login/Logout';
+import {path} from '../../04-App/Routes/Routes';
 
 
 const NavBar: React.FC = () => {

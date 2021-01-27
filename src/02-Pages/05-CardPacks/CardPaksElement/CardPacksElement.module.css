@@ -1,8 +1,18 @@
-.wrapper {
-    display: flex;
-    justify-content: space-between;
-    width: 50%;
-    margin-top: 15px;
-    padding: 5px;
-    border: 1px solid black;
+.inactive {
+    color: #2d4052;
+}
+.active {
+    color: #fa6e4f;
+}
+
+.inactive:hover {
+    color: #fa6e4f;
+}
+
+tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+tr {
+    border-top: 1px solid #d7d7d7;
 }

@@ -14,7 +14,7 @@ const Logout: React.FC<LoginPropsType> = () => {
         dispatch(deleteAuthUserData())
     }
     return (
-        <div className={style.logoutForm} onClick={onclickHandler}> LOGOUT</div>
+        <span className={style.logoutForm} onClick={onclickHandler}> LOGOUT</span>
     )
 };
 

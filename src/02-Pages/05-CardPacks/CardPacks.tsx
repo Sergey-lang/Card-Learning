@@ -1,7 +1,8 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect} from 'react-router-dom';
-import {path} from '../../04-App/App';
+import style from './../../03-Components/container/dataForn.module.css'
+import s from './CardPacks.module.css'
 import {
     addCardPacks,
     CardPacksFilterType,
@@ -14,21 +15,16 @@ import {
 import {RootStateType} from '../../04-App/store';
 import CardPacksElement from './CardPaksElement/CardPacksElement';
 import {Paginator} from '../../03-Components/Paginator/Paginator';
-import Input from '../../03-Components/SuperComponents/Input/Input';
-import Button from '../../03-Components/SuperComponents/Button/Button';
-import Checkbox from '../../03-Components/SuperComponents/CheckBox/Checkbox';
 import DoubleRange from '../../03-Components/SuperComponents/DoubleRange/DoubleRange';
-
-import style from './CardPacks.module.css'
-import ErrorSnackBar from '../../03-Components/ErrorSnackBar/ErrorSnackBar';
-import ProgressBar from '../../03-Components/SuperComponents/ProgressBar/ProgressBar';
+import {path} from '../../04-App/Routes/Routes';
+import UniversalInputText from '../../03-Components/SuperComponents/InputText/UniversalInputText';
+import UniversalCheckbox from '../../03-Components/SuperComponents/DoubleRange/Checkbox/UniversalCheckbox';
+import UniversalButton from '../../03-Components/SuperComponents/Button/FornButton/UniversalButton';
 
 const CardPacks: React.FC = () => {
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
     const cardPacks = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
 
-    const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
-    const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
 
     //filter data
     const packsTotalCount = useSelector<RootStateType, number>(state => state.cardsPack.packsTotalCount)
@@ -73,7 +69,7 @@ const CardPacks: React.FC = () => {
         packName: inputValue,
         min: range[0],
         max: range[1],
-        userId: showEditMode? userId : ''
+        userId: showEditMode ? userId : ''
     }
 
     //generate random id for adding pack
@@ -108,30 +104,33 @@ const CardPacks: React.FC = () => {
     if (!isAuth) return <Redirect to={path.LOGIN}/>
 
     return (
-        <div>
-            {
-                appStatus === 'loading' && <ProgressBar/>
-            }
-            <div className={style.search}>
+        <div className={style.dataForm}>
+            <div className={s.search}>
+                <h4>FORM FOR SEARCH</h4>
                 <DoubleRange range={range} setRange={setRange}/>
-                <Input onChange={inputHandler}/>
-                <Button onClick={onSearch}>Search</Button>
-                <Button onClick={onAddCardPacks}>Add CardPacks</Button>
-                <Checkbox title={'Show only mine pack'}
-                          checked={showEditMode}
-                          onChange={showOwnPack}/>
+                <UniversalInputText onChange={inputHandler} placeholder={'search...'}/>
+                <UniversalCheckbox
+                    checked={showEditMode}
+                    onChange={showOwnPack}>
+                    Show only mine pack
+                </UniversalCheckbox>
+                <UniversalButton onClick={onSearch}>Search</UniversalButton>
+                <UniversalButton onClick={onAddCardPacks}>Add new CardPack</UniversalButton>
+            </div>
+            <div className={s.cards}>
                 <Paginator currentPage={currentPage}
                            onPageChanged={onPageChanged}
                            pageSize={pageSize}
                            totalItemsCount={packsTotalCount}/>
-                {
-                    mappedPacks
-                }
+                <table className={s.table}>
+                    <tbody> {
+                        mappedPacks
+                    }
+                    </tbody>
+                </table>
             </div>
-            {
-                error && <ErrorSnackBar errorMessage={error}/>
-            }
         </div>
+
     )
 }
 

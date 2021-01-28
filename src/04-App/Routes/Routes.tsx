@@ -9,6 +9,7 @@ import {PasswordRecovery} from '../../02-Pages/03-Password/PasswordRecovery';
 import CardPacks from '../../02-Pages/05-CardPacks/CardPacks';
 import Cards from '../../02-Pages/06-Cards/Cards';
 import LearningPage from '../../02-Pages/07-Learning/LearningPage';
+import ErrorPage from '../../03-Components/NotFound/Error404';
 
 export const path = {
     LOGIN: '/login',
@@ -35,7 +36,7 @@ function Routes() {
                 <Route path={path.CARD_PACKS} exact render={() => <CardPacks/>}/>
                 <Route path={path.CARDS + '/:id'} exact render={() => <Cards/>}/>
                 <Route path={path.LEARNING + '/:id'} exact render={() => <LearningPage/>}/>
-                {/*<Route path={'/404'} render={() => <ErrorPage/>}/>*/}
+                <Route path={'/404'} render={() => <ErrorPage/>}/>
                 <Redirect from={'*'} to={'/404'}/>
             </Switch>
         </div>

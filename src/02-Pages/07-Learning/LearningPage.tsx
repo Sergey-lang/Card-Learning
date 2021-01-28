@@ -28,7 +28,7 @@ const LearningPage: React.FC = () => {
         console.log('test: ', sum, rand, res)
 
         return cards[res.id + 1];
-    },[cards])
+    }, [cards])
 
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
 

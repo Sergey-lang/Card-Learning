@@ -7,6 +7,7 @@ import {setAppStatus} from './appState-reducer';
 type ActionsType = ReturnType<typeof setCards>
     | ReturnType<typeof setFilter>
     | ReturnType<typeof setAppStatus>
+    | ReturnType<typeof setGrade>
     | ReturnType<typeof createCard>
 
 export type CardType = {
@@ -53,6 +54,14 @@ export const cardsReducer = (state = initialState, actions: ActionsType): CardsI
             return {...state, cards: actions.cards}
         case 'CARDS/CARDS/ADD-CARD':
             return {...state, cards: [actions.newCard, ...state.cards]}
+        case 'CARDS/CARDS/SET-GRADE':
+            return {
+                ...state,
+                cards: state.cards.map(
+                    (card, i) => card._id === actions.payload.id ? {...card, grade: actions.payload.grade}
+                        : card
+                )
+            }
         default:
             return state
     }
@@ -66,6 +75,14 @@ export const createCard = (newCard: CardType) => ({type: 'CARDS/CARDS/ADD-CARD',
 export const setFilter = (filter: CardsFilterType) => ({
     type: 'CARDS/CARDS/SET-FILTER', payload: {
         filter
+    }
+} as const)
+
+export const setGrade = (grade: number, id: string) => ({
+    type: 'CARDS/CARDS/SET-GRADE',
+    payload: {
+        id,
+        grade
     }
 } as const)
 
@@ -126,6 +143,9 @@ export const sendGrade = (grade: number, card_id: string) => (dispatch: ThunkDis
     cardsAPI.sendGrade(grade, card_id)
         .then(res => {
             dispatch(setAppStatus({status: 'succeeded', error: 'Отправлено'}))
+            const cardID = res.data._id
+            const grade = res.data.grade
+            dispatch(setGrade(grade, cardID))
         })
         .catch((e) => {
             const error = e.response

@@ -1,8 +1,9 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import style from './NavBar.module.css'
-import {path} from '../../04-App/App';
 import Logout from '../../02-Pages/01-Login/Logout';
+import {path} from '../../04-App/Routes/Routes';
+
 
 const NavBar: React.FC = () => {
     return <div className={style.header}>
@@ -20,7 +21,6 @@ const NavBar: React.FC = () => {
                 <li><NavLink to={path.PASSWORD}>New password</NavLink></li>
                 <li><NavLink to={path.PROFILE}>Profile</NavLink></li>
                 <li><NavLink to={path.CARD_PACKS}>Cards Pack</NavLink></li>
-                <li><NavLink to={'/'}>All components</NavLink></li>
                 <li><Logout/></li>
             </ul>
         </div>

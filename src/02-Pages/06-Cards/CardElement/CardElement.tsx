@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {CardType} from '../../../00-Redux/cards-reducer';
-
 import s from './CardElement.module.css'
+import ModalForDelete from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForDelete';
+import ModalForUpdateCard from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForUpdateCard';
+import Button from '../../../03-Components/SuperComponents/Button/Button';
 
 type CardPropsType = {
     card: CardType
@@ -14,32 +16,54 @@ const CardElement: React.FC<CardPropsType> = (
         card, updateCard, removeCard
     }) => {
 
-    const onUpdateHandler = () => {
-        updateCard({
-            _id: card._id,
-            type: 'Java',
-            question: 'fake quessssstion',
-            answer: `fake answerrrrr`,
-            cardsPack_id: card.cardsPack_id,
-            grade: 4.54654,
-            rating:0
-        })
-    }
+    //for modal
+    const [activeModalDelete, setActiveModalDelete] = useState<boolean>(false)
+    const [activeModalUpdate, setActiveModalUpdate] = useState<boolean>(false)
+    const [questionCard, setQuestionCard] = useState<string>('')
+    const [answerCard, setAnswerCard] = useState<string>('')
 
-    const onRemoveHandler = () => {
+    //for delete
+    const deleteModalHandlerYes = () => {
         removeCard(card._id)
     }
 
+    //for update
+    const updateModalHandler = () => {
+        updateCard({
+            _id: card._id,
+            type: 'Java',
+            question: questionCard,
+            answer: answerCard,
+            cardsPack_id: card.cardsPack_id,
+            grade: 4.54654,
+            rating: 0
+        })
+        setActiveModalUpdate(false)
+    }
+
+    const onUpdateHandler = () => {
+        setActiveModalUpdate(true)
+    }
+
+    const onRemoveHandler = () => {
+        setActiveModalDelete(true)
+    }
+
     return (
-        <div className={s.wrapper}>
-            <div>{card.user_id}</div>
-            <div>{card.question ? card.question : 'empty question'}</div>
-            <div>{card.answer ? card.answer : 'empty answer'}</div>
-            <div>{card.type ? card.type : 'empty type'}</div>
-            <div>{card.grade}</div>
-            <div>{card.created}</div>
-            <button onClick={onUpdateHandler}>Update</button>
-            <button onClick={onRemoveHandler}>Delete</button>
+        <div className={s.card}>
+            <h5>{card.question ? card.question : 'empty question'}</h5>
+            <p>{card.answer ? card.answer : 'empty answer'}</p>
+            <p>type of card: {card.type ? card.type : 'empty type'} </p>
+            <p>grade: {card.grade}</p>
+            <Button onClick={onUpdateHandler}>Update</Button>
+            <Button onClick={onRemoveHandler}>Delete</Button>
+
+            <ModalForDelete active={activeModalDelete} setActive={setActiveModalDelete}
+                            deleteModalHandlerYes={deleteModalHandlerYes}/>
+
+            <ModalForUpdateCard active={activeModalUpdate} setActive={setActiveModalUpdate}
+                                setQuestionCard={setQuestionCard} setAnswerCard={setAnswerCard}
+                                updateModalHandler={updateModalHandler}/>
         </div>
     )
 }

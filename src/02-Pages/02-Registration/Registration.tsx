@@ -1,23 +1,21 @@
 import React, {ChangeEvent, useCallback, useState} from 'react';
-import {Redirect} from 'react-router-dom';
-import {path} from '../../04-App/App';
+import {NavLink, Redirect} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootStateType} from '../../04-App/store';
 import {registrationTC} from '../../00-Redux/registration-reducer';
-import {Input} from '../../03-Components/SuperComponents/Input/Input';
-import Button from '../../03-Components/SuperComponents/Button/Button';
-import ErrorSnackBar from '../../03-Components/ErrorSnackBar/ErrorSnackBar';
+import {path} from '../../04-App/Routes/Routes';
+import UniversalInputText from '../../03-Components/SuperComponents/InputText/UniversalInputText';
+import UniversalButton from '../../03-Components/SuperComponents/Button/FornButton/UniversalButton';
+import stylesContainer from './../../03-Components/container/container.module.css';
+import UniversalCheckbox from '../../03-Components/SuperComponents/DoubleRange/Checkbox/UniversalCheckbox';
+import s from '../01-Login/Login.module.css';
 
-import s from './Registration.module.css';
-
-const Registration: React.FC= () => {
+const Registration: React.FC = () => {
     const dispatch = useDispatch()
 
     const [email, setEmail] = useState<string>('xranitelinadejd@gmail.com')
     const [password, setPassword] = useState<string>('KOSTYA1234END.')
     const isRedirectProfile = useSelector<RootStateType, boolean>(state => state.registration.isRedirect)
-
-    const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
     const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
 
     const onChangeHandlerEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => setEmail(e.currentTarget.value), [])
@@ -30,14 +28,19 @@ const Registration: React.FC= () => {
         return <Redirect to={path.LOGIN}/>
     }
 
-    return <div className={s.wrapper}>
-        <h1>Registration</h1>
-        {error && <ErrorSnackBar errorMessage={error}/>}
-        <form className={s.registrationForm}>
-            <Input type={'text'} value={email} onChange={onChangeHandlerEmail} placeholder={'Email'}/>
-            <Input type={'password'} value={password} onChange={onChangeHandlerPassword} placeholder={'03-Password'}/>
-            <Button onClick={onClickHandler} disabled={appStatus === 'loading'}> Registration </Button>
-        </form>
+    return <div className={stylesContainer.container}>
+        <h4>CREATE A NEW ACCOUNT</h4>
+        <div className={stylesContainer.inner}>
+            <UniversalInputText type={'text'} value={email} onChange={onChangeHandlerEmail} placeholder={'Email'}/>
+            <UniversalInputText type={'password'} value={password} onChange={onChangeHandlerPassword}
+                                placeholder={'Password'}/>
+            <UniversalCheckbox>I agree to the Terms of Service and Privacy Policy</UniversalCheckbox>
+            <UniversalButton onClick={onClickHandler}
+                             disabled={appStatus === 'loading'}> SIGN UP </UniversalButton>
+            <hr/>
+            <p>Already registered? <NavLink to={path.LOGIN} activeClassName={stylesContainer.activeLink}
+                                            className={s.inactive}>Sign in to your account.</NavLink></p>
+        </div>
     </div>
 };
 

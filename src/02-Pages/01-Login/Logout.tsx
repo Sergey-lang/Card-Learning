@@ -4,7 +4,6 @@ import {deleteAuthUserData} from '../../00-Redux/login-reducer';
 import {useDispatch} from 'react-redux';
 
 
-
 type LoginPropsType = {}
 
 const Logout: React.FC<LoginPropsType> = () => {
@@ -15,7 +14,7 @@ const Logout: React.FC<LoginPropsType> = () => {
         dispatch(deleteAuthUserData())
     }
     return (
-        <div className={style.logoutForm} onClick={onclickHandler}> LOGOUT</div>
+        <span className={style.logoutForm} onClick={onclickHandler}> LOGOUT</span>
     )
 };
 

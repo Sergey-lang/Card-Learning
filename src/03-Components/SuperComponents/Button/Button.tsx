@@ -8,9 +8,8 @@ type ButtonPropsType = DefaultInputPropsType & {}
 
 export const Button: React.FC<ButtonPropsType> = ({children,onClick, disabled}) => {
 
-    return <div className={style.container}>
-        <button className={style.button} disabled={disabled} onClick={onClick}>{children}</button>
-    </div>
+    return <button className={style.button} disabled={disabled} onClick={onClick}>{children}</button>
+
 }
 
 export default Button;

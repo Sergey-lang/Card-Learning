@@ -53,13 +53,15 @@ export const getAuthUserData = (email: string, password: string, rememberMe: boo
         dispatch(setAppStatus({status: 'failed', error: error}))
     })
 }
-export const deleteAuthUserData = () => (dispatch: Dispatch<ActionsType>) => {
+
+
+export const authUser = () => (dispatch: Dispatch) => {
     dispatch(setAppStatus({status: 'loading', error: null}))
-    authAPI.logout()
+    authAPI.getAuth()
         .then(res => {
                 dispatch(setAppStatus({status: 'succeeded', error: null}))
-                dispatch(isAuth(false))
-                alert(res.data.info)
+                dispatch(isAuth(true))
+                dispatch(setUserData(res.data))
             }
         ).catch((e) => {
         const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
@@ -67,3 +69,16 @@ export const deleteAuthUserData = () => (dispatch: Dispatch<ActionsType>) => {
     })
 }
 
+
+export const deleteAuthUserData = () => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setAppStatus({status: 'loading', error: null}))
+    authAPI.logout()
+        .then(res => {
+                dispatch(isAuth(false))
+                dispatch(setAppStatus({status: 'failed', error: res.data.info}))
+            }
+        ).catch((e) => {
+        const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
+        dispatch(setAppStatus({status: 'failed', error: error}))
+    })
+}

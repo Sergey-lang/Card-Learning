@@ -1,10 +1,13 @@
-import React, {ChangeEvent, useState} from 'react';
-import {path} from '../../../04-App/App';
+import React, {useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {CardPacksType} from '../../../00-Redux/card-packs-reducer';
-
 import s from './CardPacksElement.module.css'
-import ModalWindow from '../../../03-Components/SuperComponents/Modal/Modal';
+import ModalForDeleteCardsPack from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForDelete';
+import ModalForUpdateCardsPack
+    from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForUpdateCardsPack';
+import {path} from '../../../04-App/Routes/Routes';
+import Button from '../../../03-Components/SuperComponents/Button/Button';
+
 
 type CardPropsType = {
     pack: CardPacksType
@@ -34,48 +37,32 @@ const CardPacksElement: React.FC<CardPropsType> = (
     const deleteModalHandlerYes = () => {
         removeCardPacks(pack._id)
     }
-    const deleteModalHandlerNo = () => {
-        setActiveModalDelete(false)
-    }
+
     //for update
     const updateModalHandler = () => {
         updateCardPacks && updateCardPacks({_id: pack._id, name: titleCard, type: 'bla-type'})
         setActiveModalUpdate(false)
         setTitleCard('')
     }
-    const handlerForUpdateTitleCard = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitleCard(e.currentTarget.value)
 
-    }
-    const updateModalHandlerCancel = () => {
-        setActiveModalUpdate(false)
-    }
 
-    return (
-        <div className={s.wrapper}>
-            <div>{pack.name}</div>
-            <div>{pack.cardsCount ? pack.cardsCount : `empty`}</div>
-            <div>{pack.created}</div>
-            <div>
-                <button onClick={onUpdateHandler}>Update</button>
-                <button onClick={onRemoveHandler}>Delete</button>
-            </div>
-            <NavLink to={path.LEARNING + '/' + pack._id}>учить</NavLink>
-            <NavLink to={path.CARDS + '/' + pack._id}>ссылка</NavLink>
-
-            <ModalWindow active={activeModalDelete} setActive={setActiveModalDelete}>
-                <p>Are you sure?</p>
-                <button onClick={deleteModalHandlerYes}>Yes</button>
-                <button onClick={deleteModalHandlerNo}>No</button>
-            </ModalWindow>
-
-            <ModalWindow active={activeModalUpdate} setActive={setActiveModalUpdate}>
-                <p>Here You can do some changes</p>
-                <input type={'text'} onChange={handlerForUpdateTitleCard}/>
-                <button onClick={updateModalHandler}>Update</button>
-                <button onClick={updateModalHandlerCancel}>Cancel</button>
-            </ModalWindow>
-        </div>
+    return (<>
+            <tr>
+                <td>{pack.name}</td>
+                <td>{pack.cardsCount ? pack.cardsCount : `empty`}</td>
+                <td><Button onClick={onUpdateHandler}>Update</Button></td>
+                <td><Button onClick={onRemoveHandler}>Delete</Button></td>
+                <td><NavLink className={s.inactive} activeClassName={s.active}
+                             to={path.LEARNING + '/' + pack._id}>Learn</NavLink></td>
+                <td><NavLink className={s.inactive} activeClassName={s.active}
+                             to={path.CARDS + '/' + pack._id}>Cards</NavLink></td>
+            </tr>
+            <ModalForDeleteCardsPack active={activeModalDelete} setActive={setActiveModalDelete}
+                                     deleteModalHandlerYes={deleteModalHandlerYes}/>
+            <ModalForUpdateCardsPack active={activeModalUpdate} setActive={setActiveModalUpdate}
+                                     setTitleCard={setTitleCard}
+                                     updateModalHandler={updateModalHandler}/>
+                                     </>
     )
 }
 

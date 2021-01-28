@@ -1,15 +1,12 @@
-import {path} from '../../04-App/App';
 import React, {useEffect} from 'react';
 import {RootStateType} from '../../04-App/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, useParams} from 'react-router-dom';
-import ErrorSnackBar from '../../03-Components/ErrorSnackBar/ErrorSnackBar';
 import {SendingForm} from '../../03-Components/SuperComponents/SendingForm/SendingForm';
 import {resetPassword} from '../../00-Redux/resetPassword-thunks';
-import ProgressBar from '../../03-Components/SuperComponents/ProgressBar/ProgressBar';
-
-import s from './Password.module.css'
 import {setAppStatus} from '../../00-Redux/appState-reducer';
+import {path} from '../../04-App/Routes/Routes';
+import stylesContainer from '../../03-Components/container/container.module.css';
 
 export const ResetPassword: React.FC = () => {
 
@@ -18,7 +15,7 @@ export const ResetPassword: React.FC = () => {
     const history = useHistory();
 
     const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
-    const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
+
 
     const tokenName = token ? token : ''
 
@@ -45,10 +42,7 @@ export const ResetPassword: React.FC = () => {
     }, [])
 
     return (
-        <div className={s.pageWrapper}>
-            {
-                appStatus === 'loading' && <ProgressBar/>
-            }
+        <div className={stylesContainer.container}>
             <SendingForm formName={'RESET PASSWORD'}
                          formDescription={`Create a new, strong password that you don't use for other websites`}
                          callback={resetOldPassword}
@@ -58,9 +52,6 @@ export const ResetPassword: React.FC = () => {
                          btnDisabled={appStatus === 'loading'}
                          navLinkPath={path.LOGIN}
             />
-            {
-                error && <ErrorSnackBar errorMessage={error}/>
-            }
         </div>
     )
 }

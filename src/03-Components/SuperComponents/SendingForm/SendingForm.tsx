@@ -1,9 +1,9 @@
 import React, {ChangeEvent, useState} from 'react';
 import {NavLink} from 'react-router-dom';
-import {Button} from '../Button/Button';
-import {Input} from '../Input/Input';
-
 import s from './SendingForm.module.css';
+import stylesContainer from '../../container/container.module.css';
+import UniversalInputText from '../InputText/UniversalInputText';
+import UniversalButton from '../Button/FornButton/UniversalButton';
 
 type PropsType = {
     formName: string
@@ -54,25 +54,26 @@ export const SendingForm: React.FC<PropsType> = (
 
     return (
         <div className={s.formWrapper}>
-            <h1 className={s.pageName}>{formName}</h1>
-            <div className={s.inner}>
+            <h4>{formName}</h4>
+            <div className={stylesContainer.inner}>
                 <h3 className={s.title}>{formDescription}</h3>
                 {
-                    status && <span className={s.statusMessage}>{status}</span>
+                    status && <span>{status}</span>
                 }
-                <div className={s.recoveryForm}>
-                    <div className={s.fieldBlock}>
-                        <Input type={inputType}
-                               onEnter={buttonOnClick}
-                               value={value}
-                               placeholder={inputPlaceholder && inputPlaceholder}
-                               className={s.input}
-                               onChange={inputHandler}/>
-                        <Button onClick={buttonOnClick}
-                                disabled={btnDisabled}
-                                className={s.btn}>{buttonName}
-                        </Button>
-                        <NavLink to={navLinkPath ? navLinkPath : ''} className={s.loginLink}>Login</NavLink>
+                <div>
+                    <div>
+                        <UniversalInputText type={inputType}
+                                            onEnter={buttonOnClick}
+                                            value={value}
+                                            placeholder={inputPlaceholder && inputPlaceholder}
+                                            onChange={inputHandler}/>
+                        <UniversalButton onClick={buttonOnClick}
+                                         disabled={btnDisabled}>{buttonName}
+                        </UniversalButton>
+                        <hr/>
+                        <p> Let's <NavLink to={navLinkPath ? navLinkPath : ''}
+                                           activeClassName={stylesContainer.activeLink} className={s.inactive}>
+                            Sign in </NavLink></p>
                     </div>
                 </div>
             </div>

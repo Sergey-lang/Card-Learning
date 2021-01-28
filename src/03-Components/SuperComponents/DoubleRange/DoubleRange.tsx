@@ -23,8 +23,8 @@ const DoubleRange: React.FC<DoubleRangePropsType> = ({range, setRange, children}
                         ...props.style,
                         height: '36px',
                         display: 'flex',
-                        width: '50%',
-                        margin: '30px',
+                        width: '95%',
+                        margin: '0px',
                     }}
                 >
                     <div
@@ -35,7 +35,7 @@ const DoubleRange: React.FC<DoubleRangePropsType> = ({range, setRange, children}
                             borderRadius: '4px',
                             background: getTrackBackground({
                                 values: range,
-                                colors: ['#ccc', '#548BF4', '#ccc'],
+                                colors: ['#ccc', '#2d4052', '#ccc'],
                                 min: range[0],
                                 max: range[1]
 
@@ -69,12 +69,12 @@ const DoubleRange: React.FC<DoubleRangePropsType> = ({range, setRange, children}
                             fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',
                             padding: '4px',
                             borderRadius: '4px',
-                            backgroundColor: '#548BF4'
+                            backgroundColor: '#2d4052'
                         }}
                     >
                         {range[index].toFixed(0)}
                     </div>
-                    <div style={{height: '16px', width: '5px', backgroundColor: isDragged ? '#548BF4' : '#CCC'}}/>
+                    <div style={{height: '16px', width: '5px', backgroundColor: isDragged ? '#2d4052' : '#CCC'}}/>
                 </div>
             )}
         />

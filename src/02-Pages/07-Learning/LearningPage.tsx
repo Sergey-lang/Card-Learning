@@ -3,12 +3,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootStateType} from '../../04-App/store';
 import {CardType, getCards, sendGrade} from '../../00-Redux/cards-reducer';
 import {Redirect, useParams} from 'react-router-dom';
-import {path} from '../../04-App/App';
 import Button from '../../03-Components/SuperComponents/Button/Button';
 import ProgressBar from '../../03-Components/SuperComponents/ProgressBar/ProgressBar';
 import ErrorSnackBar from '../../03-Components/ErrorSnackBar/ErrorSnackBar';
 
 import s from './LearningPage.module.css'
+import {path} from '../../04-App/Routes/Routes';
 
 const grades = ['не знал', 'забыл', 'долго думал', 'перепутал', 'знал'];
 

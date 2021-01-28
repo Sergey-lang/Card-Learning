@@ -1,9 +1,18 @@
-
-body {
-    font-family: 'Varela Round', sans-serif;
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url("home_bg.jpg");
+    background-position: center;
+    background-size: cover; /*//для сохранеия пропорций*/
+}
+.App::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(45, 64, 82, 0.5);
 }
 
-.allComponents{
-    margin: 0 auto;
-    max-width: 500px;
-}

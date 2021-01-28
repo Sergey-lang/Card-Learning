@@ -1,36 +1,17 @@
-.cardsPage {
+.dataForm {
     display: flex;
-    justify-content: space-around;
     position: absolute;
     width: 75%;
     height: 60%;
     background-color: #fff;
+    flex-direction: column;
+    align-items: center;
     padding: 30px;
     flex-wrap: wrap;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     box-shadow: 0 5px 15px rgb(0 0 50%);
-    text-align: center;
-}
-
-
-.search {
-    width: 30%;
-    flex-wrap: wrap;
-}
-
-.cardsBlock {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
+    justify-content: space-around;
 
 }
-
-
-
-
-
-
-
 

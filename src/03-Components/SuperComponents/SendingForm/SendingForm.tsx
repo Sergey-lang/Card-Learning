@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom';
 import s from './SendingForm.module.css';
 import stylesContainer from '../../container/container.module.css';
 import UniversalInputText from '../InputText/UniversalInputText';
-import UniversalButton from '../Button/FornButton/UniversalButton';
+import UniversalButton from '../Button/FormButton/UniversalButton';
 
 type PropsType = {
     formName: string

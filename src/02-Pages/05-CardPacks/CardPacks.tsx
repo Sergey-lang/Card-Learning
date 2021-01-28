@@ -19,12 +19,11 @@ import DoubleRange from '../../03-Components/SuperComponents/DoubleRange/DoubleR
 import {path} from '../../04-App/Routes/Routes';
 import UniversalInputText from '../../03-Components/SuperComponents/InputText/UniversalInputText';
 import UniversalCheckbox from '../../03-Components/SuperComponents/DoubleRange/Checkbox/UniversalCheckbox';
-import UniversalButton from '../../03-Components/SuperComponents/Button/FornButton/UniversalButton';
+import UniversalButton from '../../03-Components/SuperComponents/Button/FormButton/UniversalButton';
 
 const CardPacks: React.FC = () => {
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
     const cardPacks = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
-
 
     //filter data
     const packsTotalCount = useSelector<RootStateType, number>(state => state.cardsPack.packsTotalCount)
@@ -39,7 +38,6 @@ const CardPacks: React.FC = () => {
     const [range, setRange] = useState([0, 15])
 
     const dispatch = useDispatch()
-
 
     //get all packs
     useEffect(() => {

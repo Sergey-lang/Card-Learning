@@ -4,12 +4,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootStateType} from '../../04-App/store';
 import {NavLink, Redirect} from 'react-router-dom';
 import {getAuthUserData} from '../../00-Redux/login-reducer';
-import UniversalButton from '../../03-Components/SuperComponents/Button/FornButton/UniversalButton';
+import UniversalButton from '../../03-Components/SuperComponents/Button/FormButton/UniversalButton';
 import UniversalInputText from '../../03-Components/SuperComponents/InputText/UniversalInputText';
 import UniversalCheckbox from '../../03-Components/SuperComponents/DoubleRange/Checkbox/UniversalCheckbox';
 import {path} from '../../04-App/Routes/Routes';
 import s from '../01-Login/Login.module.css';
-
 
 type LoginPropsType = {}
 

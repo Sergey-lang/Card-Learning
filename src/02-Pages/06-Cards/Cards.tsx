@@ -7,7 +7,7 @@ import {Redirect, useParams} from 'react-router-dom';
 import CardElement from './CardElement/CardElement';
 import ModalForAddCards from '../../03-Components/SuperComponents/Modal/ModalForCards/ModalForAddCard';
 import {path} from '../../04-App/Routes/Routes';
-import UniversalButton from '../../03-Components/SuperComponents/Button/FornButton/UniversalButton';
+import UniversalButton from '../../03-Components/SuperComponents/Button/FormButton/UniversalButton';
 
 
 const Cards: React.FC = () => {

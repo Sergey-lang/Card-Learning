@@ -8,7 +8,6 @@ import Header from '../03-Components/header/header';
 import Routes from './Routes/Routes';
 import ErrorSnackBar from '../03-Components/ErrorSnackBar/ErrorSnackBar';
 
-
 const App: React.FC = () => {
     const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
     const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
@@ -17,7 +16,6 @@ const App: React.FC = () => {
     useEffect(() => {
         dispatch(authUser())
     }, []);
-
 
     return <div className='App'>
         <Header/>

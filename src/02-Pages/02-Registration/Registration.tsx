@@ -5,7 +5,7 @@ import {RootStateType} from '../../04-App/store';
 import {registrationTC} from '../../00-Redux/registration-reducer';
 import {path} from '../../04-App/Routes/Routes';
 import UniversalInputText from '../../03-Components/SuperComponents/InputText/UniversalInputText';
-import UniversalButton from '../../03-Components/SuperComponents/Button/FornButton/UniversalButton';
+import UniversalButton from '../../03-Components/SuperComponents/Button/FormButton/UniversalButton';
 import stylesContainer from './../../03-Components/container/container.module.css';
 import UniversalCheckbox from '../../03-Components/SuperComponents/DoubleRange/Checkbox/UniversalCheckbox';
 import s from '../01-Login/Login.module.css';

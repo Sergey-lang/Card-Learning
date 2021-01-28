@@ -6,7 +6,6 @@ import NavBar from '../NavBar/NavBar';
 import {path} from '../../04-App/Routes/Routes';
 
 
-
 function Header() {
     return (
         <div className={s.header}>

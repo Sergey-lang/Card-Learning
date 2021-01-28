@@ -71,8 +71,9 @@ export const SendingForm: React.FC<PropsType> = (
                                          disabled={btnDisabled}>{buttonName}
                         </UniversalButton>
                         <hr/>
-                       <p> Let's <NavLink to={navLinkPath ? navLinkPath : ''} className={stylesContainer.link}>
-                           <p className={stylesContainer.link}> Sign in </p></NavLink> </p>
+                        <p> Let's <NavLink to={navLinkPath ? navLinkPath : ''}
+                                           activeClassName={stylesContainer.activeLink} className={s.inactive}>
+                            Sign in </NavLink></p>
                     </div>
                 </div>
             </div>

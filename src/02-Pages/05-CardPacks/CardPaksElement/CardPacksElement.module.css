@@ -15,4 +15,8 @@ tr:nth-of-type(odd) {
 
 tr {
     border-top: 1px solid #d7d7d7;
+    font-family: Sintony, sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 700;
 }

@@ -8,6 +8,7 @@ import UniversalInputText from '../../03-Components/SuperComponents/InputText/Un
 import UniversalButton from '../../03-Components/SuperComponents/Button/FornButton/UniversalButton';
 import stylesContainer from './../../03-Components/container/container.module.css';
 import UniversalCheckbox from '../../03-Components/SuperComponents/DoubleRange/Checkbox/UniversalCheckbox';
+import s from '../01-Login/Login.module.css';
 
 const Registration: React.FC = () => {
     const dispatch = useDispatch()
@@ -37,8 +38,8 @@ const Registration: React.FC = () => {
             <UniversalButton onClick={onClickHandler}
                              disabled={appStatus === 'loading'}> SIGN UP </UniversalButton>
             <hr/>
-            <p>Already registered? <NavLink to={path.LOGIN} activeClassName={stylesContainer.activeLink}><p
-                className={stylesContainer.link}>Sign in to your account. </p></NavLink></p>
+            <p>Already registered? <NavLink to={path.LOGIN} activeClassName={stylesContainer.activeLink}
+                                            className={s.inactive}>Sign in to your account.</NavLink></p>
         </div>
     </div>
 };

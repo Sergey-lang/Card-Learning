@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {RootStateType} from '../../04-App/store';
 import {useDispatch, useSelector} from 'react-redux';
-import ProgressBar from '../../03-Components/SuperComponents/ProgressBar/ProgressBar';
 import {SendingForm} from '../../03-Components/SuperComponents/SendingForm/SendingForm';
 import {sendRecoveryEmail} from '../../00-Redux/resetPassword-thunks';
 import {setAppStatus} from '../../00-Redux/appState-reducer';
@@ -26,9 +25,6 @@ export const PasswordRecovery: React.FC = () => {
 
     return (
         <div className={stylesContainer.container}>
-            {
-                appStatus === 'loading' && <ProgressBar/>
-            }
             <SendingForm formName={'RECOVERY PASSWORD'}
                          formDescription={`Enter the email address you used to register and we'll send you the instruction`}
                          callback={sendEmail}

@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootStateType} from '../../04-App/store';
+import {RootStateType} from '../../00-Redux/store';
 import {CardType, getCards, sendGrade} from '../../00-Redux/cards-reducer';
 import {Redirect, useParams} from 'react-router-dom';
 import Button from '../../03-Components/SuperComponents/Button/Button';
@@ -13,7 +13,7 @@ import {path} from '../../04-App/Routes/Routes';
 const grades = ['не знал', 'забыл', 'долго думал', 'перепутал', 'знал'];
 
 const LearningPage: React.FC = () => {
-    //cards from redux
+
     const dispatch = useDispatch()
     const cards = useSelector<RootStateType, CardType[]>(state => state.cards.cards)
 
@@ -35,20 +35,17 @@ const LearningPage: React.FC = () => {
     const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
     const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
 
-    //get Pack ID
     const {id} = useParams<{ id: string }>();
 
     const [firstCard, setFirstCard] = useState<boolean>(true)
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [card, setCard] = useState<CardType>({} as CardType)
 
-    //get cards use Pack ID
     useEffect(() => {
         if (firstCard) {
             dispatch(getCards(id))
             setFirstCard(false)
         }
-
         if (cards.length > 0) {
             setCard(getRandomCard(cards))
             return () => {

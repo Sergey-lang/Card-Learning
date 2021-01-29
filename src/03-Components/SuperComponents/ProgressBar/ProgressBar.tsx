@@ -1,6 +1,5 @@
 import React from "react";
-import style from "./ProgressBar.module.css";
-
+import s from "./ProgressBar.module.css";
 
 type ProgressBarTextPropsType = {
 
@@ -12,8 +11,8 @@ export const ProgressBar: React.FC<ProgressBarTextPropsType> = () => {
         width: '100%'
     }
 
-    return <div className={style.progress}>
-        <span className={style.progressBar} style={loadingValue}/>
+    return <div className={s.progress}>
+        <span className={s.progressBar} style={loadingValue}/>
     </div>
 }
 

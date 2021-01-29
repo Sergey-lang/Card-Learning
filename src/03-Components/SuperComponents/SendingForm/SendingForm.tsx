@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import s from './SendingForm.module.css';
-import stylesContainer from '../../container/container.module.css';
+import stylesContainer from '../../../assets/css/container.module.css';
 import UniversalInputText from '../InputText/UniversalInputText';
 import UniversalButton from '../Button/FormButton/UniversalButton';
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import s from './Error404.module.css'
 import {NavLink} from 'react-router-dom';
 import {path} from '../../04-App/Routes/Routes';
 
+import s from './Error404.module.css'
 
 function ErrorPage() {
     return (<div className={s.errorPage}>

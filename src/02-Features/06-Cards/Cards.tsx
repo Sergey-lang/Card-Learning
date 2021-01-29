@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootStateType} from '../../04-App/store';
+import {RootStateType} from '../../00-Redux/store';
 import s from './Cards.module.css'
 import {addCard, CardType, deleteCard, getCards, updateCard} from '../../00-Redux/cards-reducer';
 import {Redirect, useParams} from 'react-router-dom';

@@ -35,7 +35,7 @@ export const Paginator: React.FC<PropsType> = (
     const nextPortionNumberHandler = () => setPortionNumber(portionNumber + 1)
 
     return (
-        <div className={s.users_page_num}>
+        <div className={s.usersPageNumber}>
             {portionNumber > 1
             && <Button onClick={prevPortionNumberHandler}>PREV</Button>}
             {pages

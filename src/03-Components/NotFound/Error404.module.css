@@ -9,9 +9,9 @@
     bottom: 0;
     left: 0;
     flex-direction: column;
-    background-image: url("404page_bg.jpg");
+    background-image: url("../../assets/images/404page_bg.jpg");
     background-position: center;
-    background-size: cover; /*//для сохранеия пропорций*/
+    background-size: cover;
     font-family: Sintony, sans-serif;
     align-items: center;
 }

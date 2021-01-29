@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux';
 import {ThunkDispatch} from 'redux-thunk';
-import {RootStateType} from '../04-App/store';
+import {RootStateType} from './store';
 import {cardPacksAPI} from '../01-API/03-cardsPack-api';
 import {setAppStatus} from './appState-reducer';
 

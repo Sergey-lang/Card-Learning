@@ -15,7 +15,7 @@
 
 }
 
-.closeNotification{
+.closeNotification {
     display: none;
 }
 
@@ -54,7 +54,7 @@
     font-size: 12px;
 }
 
-.close:hover{
+.close:hover {
     background: rgba(255, 255, 255, 0.1);
 }
 

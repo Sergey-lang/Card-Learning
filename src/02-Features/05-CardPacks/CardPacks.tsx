@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect} from 'react-router-dom';
-import style from './../../03-Components/container/dataForn.module.css'
+import style from '../../assets/css/dataForm.module.css'
 import s from './CardPacks.module.css'
 import {
     addCardPacks,
@@ -12,7 +12,7 @@ import {
     showMode,
     updateCardPacks
 } from '../../00-Redux/card-packs-reducer';
-import {RootStateType} from '../../04-App/store';
+import {RootStateType} from '../../00-Redux/store';
 import CardPacksElement from './CardPaksElement/CardPacksElement';
 import {Paginator} from '../../03-Components/Paginator/Paginator';
 import DoubleRange from '../../03-Components/SuperComponents/DoubleRange/DoubleRange';

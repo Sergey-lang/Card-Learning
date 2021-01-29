@@ -1,24 +1,28 @@
-import style from './ErrorSnackBar.module.css'
-import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from '../../04-App/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootStateType} from '../../00-Redux/store';
 import {setAppStatus} from '../../00-Redux/appState-reducer';
 
-type ErrorSnackBarPropsType = {
+import s from './ErrorSnackBar.module.css'
+
+type ErrorBarPropsType = {
     errorMessage: string
 }
 
-const ErrorSnackBar = (props: ErrorSnackBarPropsType) => {
+const ErrorSnackBar = (props: ErrorBarPropsType) => {
+
     const dispatch = useDispatch()
     const error = useSelector<RootStateType, string | null>(state => state.app.appState.error)
 
-    const onClickHandler = () =>  dispatch(setAppStatus({status: 'idle', error: null}))
+    const onClickHandler = () => dispatch(setAppStatus({status: 'idle', error: null}))
 
-    return <div className={error ? `${style.notification}` : `: ${style.closeNotification}`}>
-        <div className={style.text}> {props.errorMessage} </div>
-        <div className={`${style.close}`}>
-            <div className={style.text} onClick={onClickHandler}>X</div>
+    return (
+        <div className={error ? `${s.notification}` : `: ${s.closeNotification}`}>
+            <div className={s.text}> {props.errorMessage} </div>
+            <div className={`${s.close}`}>
+                <div className={s.text} onClick={onClickHandler}>X</div>
+            </div>
         </div>
-    </div>
-};
+    )
+}
 
 export default ErrorSnackBar;

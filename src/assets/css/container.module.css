@@ -50,7 +50,6 @@ p {
     letter-spacing: 0;
 }
 
-
 @media screen and (max-width: 800px) {
     .container {
         width: 60%;

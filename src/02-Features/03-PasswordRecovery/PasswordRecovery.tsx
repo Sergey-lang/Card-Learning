@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
-import {RootStateType} from '../../04-App/store';
+import {RootStateType} from '../../00-Redux/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {SendingForm} from '../../03-Components/SuperComponents/SendingForm/SendingForm';
 import {sendRecoveryEmail} from '../../00-Redux/resetPassword-thunks';
 import {setAppStatus} from '../../00-Redux/appState-reducer';
 import {path} from '../../04-App/Routes/Routes';
-import stylesContainer from '../../03-Components/container/container.module.css';
+import stylesContainer from '../../assets/css/container.module.css';
 
 export const PasswordRecovery: React.FC = () => {
 

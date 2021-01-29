@@ -1,10 +1,10 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
-import {loginReducer} from '../00-Redux/login-reducer';
-import {registrationReducer} from '../00-Redux/registration-reducer';
-import {profileReducer} from '../00-Redux/profile-reducer';
-import {appStateReducer} from '../00-Redux/appState-reducer';
-import {cardPacksReducer} from '../00-Redux/card-packs-reducer';
-import {cardsReducer} from '../00-Redux/cards-reducer';
+import {loginReducer} from './login-reducer';
+import {registrationReducer} from './registration-reducer';
+import {profileReducer} from './profile-reducer';
+import {appStateReducer} from './appState-reducer';
+import {cardPacksReducer} from './card-packs-reducer';
+import {cardsReducer} from './cards-reducer';
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({

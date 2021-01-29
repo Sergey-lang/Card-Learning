@@ -2,10 +2,11 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-image: url("home_bg.jpg");
+    background-image: url("../assets/images/home_bg.jpg");
     background-position: center;
-    background-size: cover; /*//для сохранеия пропорций*/
+    background-size: cover;
 }
+
 .App::before {
     content: "";
     position: absolute;

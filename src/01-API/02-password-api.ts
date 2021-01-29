@@ -1,6 +1,5 @@
 import {APIResponseType, instance} from './api';
 
-//Response types
 export type PasswordRecoveryType = {
     answer: boolean
     html: boolean

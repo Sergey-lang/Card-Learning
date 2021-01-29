@@ -1,5 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import ModalWindow from '../Modal';
+import UniversalInputText from '../../InputText/UniversalInputText';
+import UniversalButton from '../../Button/FormButton/UniversalButton';
 
 
 type ModalAddPropsType = {
@@ -34,12 +36,12 @@ const ModalForAddCards: React.FC<ModalAddPropsType> = ({
     }
     return <div>
         <ModalWindow active={active} setActive={setActive}>
-            <p>Add new card</p>
-            QUESTION<input type={'text'} onChange={handlerForAddQuestionCard}/>
-            ANSWER <input type={'text'} onChange={handlerForAddAnswerCard}/>
-            type <input type={'text'} onChange={handlerForAddTypeCard}/>
-            <button onClick={addCardHandler}>ADD</button>
-            <button onClick={addCardHandlerCancel}>Cancel</button>
+            <h4>ADD NEW CARD</h4>
+            <p>QUESTION</p><UniversalInputText type={'text'} onChange={handlerForAddQuestionCard} placeholder={'Write your question here'}/>
+            <p>ANSWER</p> <UniversalInputText type={'text'} onChange={handlerForAddAnswerCard} placeholder={'Be sure to specify the answer'}/>
+            <p>TYPE</p> <UniversalInputText type={'text'} onChange={handlerForAddTypeCard} placeholder={'Specify a type'}/>
+            <UniversalButton onClick={addCardHandler}>ADD</UniversalButton>
+            <UniversalButton onClick={addCardHandlerCancel}>Cancel</UniversalButton>
         </ModalWindow>
     </div>
 

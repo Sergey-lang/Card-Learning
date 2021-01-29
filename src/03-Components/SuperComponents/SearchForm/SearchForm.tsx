@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Button from '../Button/Button';
-import Input from '../Input/Input';
+import UniversalInputText from '../InputText/UniversalInputText';
+
 
 type PropsType = {
     formName: string
@@ -12,7 +13,7 @@ type PropsType = {
     restProps?: any
 }
 
-export const SearchForm: React.FC<PropsType> = ({formName,placeholder,btnDisabled,inputType='text',callback}) => {
+export const SearchForm: React.FC<PropsType> = ({formName, placeholder, btnDisabled, inputType = 'text', callback}) => {
 
     const [value, setValue] = useState<string>('')
 
@@ -28,7 +29,7 @@ export const SearchForm: React.FC<PropsType> = ({formName,placeholder,btnDisable
     return (
         <div>
             <span>{formName}</span>
-            <Input type={inputType} placeholder={placeholder} value={value} onChange={changeState}/>
+            <UniversalInputText type={inputType} placeholder={placeholder} value={value} onChange={changeState}/>
             <Button onClick={onSendRequest} disabled={btnDisabled}>Search</Button>
         </div>
     )

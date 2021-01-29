@@ -1,16 +1,16 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootStateType} from '../../00-Redux/store';
 import {CardType, getCards, sendGrade} from '../../00-Redux/cards-reducer';
 import {Redirect, useParams} from 'react-router-dom';
 import Button from '../../03-Components/SuperComponents/Button/Button';
-import ProgressBar from '../../03-Components/SuperComponents/ProgressBar/ProgressBar';
 import ErrorSnackBar from '../../03-Components/ErrorSnackBar/ErrorSnackBar';
 
 import s from './LearningPage.module.css'
 import {path} from '../../04-App/Routes/Routes';
+import UniversalButton from '../../03-Components/SuperComponents/Button/FormButton/UniversalButton';
 
-const grades = ['не знал', 'забыл', 'долго думал', 'перепутал', 'знал'];
+const grades = ['no idea', 'forgot', 'think long', 'mix up', 'knew'];
 
 const LearningPage: React.FC = () => {
 
@@ -32,7 +32,6 @@ const LearningPage: React.FC = () => {
 
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
 
-    const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
     const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
 
     const {id} = useParams<{ id: string }>();
@@ -73,32 +72,33 @@ const LearningPage: React.FC = () => {
     return (
         <div className={s.pageContainer}>
             {
-                appStatus === 'loading' && <ProgressBar/>
-            }
-            {
-                cards.length > 0 && <div key={card._id} className={s.wrapper}>
-                    <div>Вопрос: {card.question}</div>
-                    <div>ID карты: {card._id}</div>
+                cards.length > 0 && <div key={card._id}>
+                    <h5>QUESTION</h5>
+                    <h4>{card.question}</h4>
+                    <p>ID карты: {card._id}</p>
                     <div>
                         {
-                            !isChecked && <button onClick={() => setIsChecked(true)}>Проверить</button>
+                            !isChecked && <UniversalButton onClick={() => setIsChecked(true)}>CHECK</UniversalButton>
                         }
                     </div>
                     <div>
                         {
                             isChecked && (
                                 <div>
-                                    <div>Ответ: {card.answer}</div>
-                                    <div>Тип карточки: {card.type}</div>
-                                    <div>Оценка: {card.grade}</div>
-                                    {
-                                        grades.map((el, i) => (
-                                            <Button key={i}
-                                                    onClick={(e) => setGrade(i + 1)}>{el}</Button>
-                                        ))
-                                    }
+                                    <hr/>
+                                    <h4>Answer: {card.answer}</h4>
+                                    <p>Type: {card.type}</p>
+                                    <p>Grade: {card.grade}</p>
                                     <div>
-                                        <button onClick={onNextCard}>Next</button>
+                                        {
+                                            grades.map((el, i) => (
+                                                <Button key={i}
+                                                        onClick={(e) => setGrade(i + 1)}>{el}</Button>
+                                            ))
+                                        }
+                                    </div>
+                                    <div>
+                                        <UniversalButton onClick={onNextCard}>Next</UniversalButton>
                                     </div>
                                 </div>
                             )

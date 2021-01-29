@@ -1,5 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import ModalWindow from '../Modal';
+import UniversalInputText from '../../InputText/UniversalInputText';
+import UniversalButton from '../../Button/FormButton/UniversalButton';
 
 
 type ModalUpdatePropsType = {
@@ -23,11 +25,13 @@ const ModalForUpdateCard: React.FC<ModalUpdatePropsType> = ({setActive, active, 
 
     return <div>
         <ModalWindow active={active} setActive={setActive}>
-            <p>Here You can do some changes</p>
-            <input type={'text'} onChange={handlerForUpdateQuestionCard}/>
-            <input type={'text'} onChange={handlerForUpdateAnswerCard}/>
-            <button onClick={updateModalHandler}>Update</button>
-            <button onClick={updateModalHandlerCancel}>Cancel</button>
+            <h4>YOU CAN DO SOME CHANGES</h4>
+            <UniversalInputText type={'text'} onChange={handlerForUpdateQuestionCard}
+                                placeholder={'Here you can update question'}/>
+            <UniversalInputText type={'text'} onChange={handlerForUpdateAnswerCard}
+                                placeholder={'Here you can update answer'}/>
+            <UniversalButton onClick={updateModalHandler}>Update</UniversalButton>
+            <UniversalButton onClick={updateModalHandlerCancel}>Cancel</UniversalButton>
         </ModalWindow>
     </div>
 }

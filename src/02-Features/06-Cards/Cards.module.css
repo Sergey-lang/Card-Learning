@@ -1,9 +1,8 @@
 .cardsPage {
     display: flex;
     justify-content: space-around;
-    position: absolute;
-    width: 75%;
-    height: 60%;
+    z-index: 100;
+    width: 90%;
     background-color: #fff;
     padding: 30px;
     flex-wrap: wrap;
@@ -17,6 +16,7 @@
 .search {
     width: 30%;
     flex-wrap: wrap;
+    margin-top: 20px;
 }
 
 .cardsBlock {

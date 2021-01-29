@@ -7,6 +7,8 @@ import ModalForUpdateCardsPack
     from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForUpdateCardsPack';
 import {path} from '../../../04-App/Routes/Routes';
 import Button from '../../../03-Components/SuperComponents/Button/Button';
+import {useSelector} from 'react-redux';
+import {RootStateType} from '../../../04-App/store';
 
 
 type CardPropsType = {
@@ -44,14 +46,15 @@ const CardPacksElement: React.FC<CardPropsType> = (
         setActiveModalUpdate(false)
         setTitleCard('')
     }
-
+    //for disabled
+    const userId = useSelector<RootStateType, string>(state => state.login.user._id)
 
     return (<>
             <tr>
                 <td>{pack.name}</td>
                 <td>{pack.cardsCount ? pack.cardsCount : `empty`}</td>
-                <td><Button onClick={onUpdateHandler}>Update</Button></td>
-                <td><Button onClick={onRemoveHandler}>Delete</Button></td>
+                <td><Button onClick={onUpdateHandler} disabled={pack.user_id !== userId}>Update</Button></td>
+                <td><Button onClick={onRemoveHandler} disabled={pack.user_id !== userId}>Delete</Button></td>
                 <td><NavLink className={s.inactive} activeClassName={s.active}
                              to={path.LEARNING + '/' + pack._id}>Learn</NavLink></td>
                 <td><NavLink className={s.inactive} activeClassName={s.active}
@@ -62,7 +65,7 @@ const CardPacksElement: React.FC<CardPropsType> = (
             <ModalForUpdateCardsPack active={activeModalUpdate} setActive={setActiveModalUpdate}
                                      setTitleCard={setTitleCard}
                                      updateModalHandler={updateModalHandler}/>
-                                     </>
+        </>
     )
 }
 

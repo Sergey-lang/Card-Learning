@@ -1,16 +1,23 @@
 .pageContainer {
-    width: 100%;
+    z-index: 100;
+    justify-content: center;
+    display: flex;
+    width: 40%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+    padding: 15px;
+    flex-wrap: wrap;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgb(0 0 50%)
 }
 
-.wrapper {
-    font-size: 18px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 350px;
-    background-color: #999797;
-    color: #2b2b2b;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin: 5px auto;
+.pageContainer h5{
+    margin: 10px;
+    font-family: 'Sintony', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #2d4052;
 }

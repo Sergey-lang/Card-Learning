@@ -2,12 +2,13 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
     background-image: url("../assets/images/home_bg.jpg");
     background-position: center;
     background-size: cover;
 }
-
 .App::before {
+    min-width: 100%;
     content: "";
     position: absolute;
     top: 0;

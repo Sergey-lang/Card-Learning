@@ -11,4 +11,7 @@
     border-color: transparent;
     margin: 5px;
 }
+.button:disabled{
+    background-color: #ecc8c3;
+}
 

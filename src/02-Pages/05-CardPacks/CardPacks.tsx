@@ -20,6 +20,7 @@ import {path} from '../../04-App/Routes/Routes';
 import UniversalInputText from '../../03-Components/SuperComponents/InputText/UniversalInputText';
 import UniversalCheckbox from '../../03-Components/SuperComponents/DoubleRange/Checkbox/UniversalCheckbox';
 import UniversalButton from '../../03-Components/SuperComponents/Button/FormButton/UniversalButton';
+import ModalForAddPack from '../../03-Components/SuperComponents/Modal/ModalForPack/ModalForAddPack';
 
 const CardPacks: React.FC = () => {
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
@@ -36,6 +37,12 @@ const CardPacks: React.FC = () => {
     //filter state
     const [inputValue, setInputValue] = useState<string>('')
     const [range, setRange] = useState([0, 15])
+
+    //for modal
+    const [activeModalAdd, setActiveModalAdd] = useState<boolean>(false)
+    const [namePack, setNamePack] = useState<string>('')
+    const [typeNewPack, setTypeNewPack] = useState<string>('undefined')
+
 
     const dispatch = useDispatch()
 
@@ -78,13 +85,17 @@ const CardPacks: React.FC = () => {
     //fake obj for adding pack
     const cardTestObj: CardPacksType = {
         '_id': genID(5),
-        name: 'NEW PACK-007',
-        type: 'Test card Packs 007'
+        name: namePack,
+        type: typeNewPack
     }
 
     //button action
     const onAddCardPacks = () => {
+        setActiveModalAdd(true)
+    }
+    const addPackHandler = () => {
         dispatch(addCardPacks(cardTestObj))
+        setActiveModalAdd(false)
     }
     const changeCardPacks = (cardsPack: CardPacksType) => {
         dispatch(updateCardPacks(cardsPack))
@@ -101,34 +112,36 @@ const CardPacks: React.FC = () => {
 
     if (!isAuth) return <Redirect to={path.LOGIN}/>
 
-    return (
-        <div className={style.dataForm}>
-            <div className={s.search}>
-                <h4>FORM FOR SEARCH</h4>
-                <DoubleRange range={range} setRange={setRange}/>
-                <UniversalInputText onChange={inputHandler} placeholder={'search...'}/>
-                <UniversalCheckbox
-                    checked={showEditMode}
-                    onChange={showOwnPack}>
-                    Show only mine pack
-                </UniversalCheckbox>
-                <UniversalButton onClick={onSearch}>Search</UniversalButton>
-                <UniversalButton onClick={onAddCardPacks}>Add new CardPack</UniversalButton>
+    return (<>
+            <div className={style.dataForm}>
+                <div className={s.search}>
+                    <h4>FORM FOR SEARCH</h4>
+                    <DoubleRange range={range} setRange={setRange}/>
+                    <UniversalInputText onChange={inputHandler} placeholder={'search...'}/>
+                    <UniversalCheckbox
+                        checked={showEditMode}
+                        onChange={showOwnPack}>
+                        Show only mine pack
+                    </UniversalCheckbox>
+                    <UniversalButton onClick={onSearch}>Search</UniversalButton>
+                    <UniversalButton onClick={onAddCardPacks}>Add new CardPack</UniversalButton>
+                </div>
+                <div className={s.cards}>
+                    <Paginator currentPage={currentPage}
+                               onPageChanged={onPageChanged}
+                               pageSize={pageSize}
+                               totalItemsCount={packsTotalCount}/>
+                    <table className={s.table}>
+                        <tbody> {
+                            mappedPacks
+                        }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div className={s.cards}>
-                <Paginator currentPage={currentPage}
-                           onPageChanged={onPageChanged}
-                           pageSize={pageSize}
-                           totalItemsCount={packsTotalCount}/>
-                <table className={s.table}>
-                    <tbody> {
-                        mappedPacks
-                    }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+            <ModalForAddPack active={activeModalAdd} setActive={setActiveModalAdd} addPackHandler={addPackHandler}
+                             setNamePack={setNamePack} setTypeNewPack={setTypeNewPack}/>
+        </>
     )
 }
 

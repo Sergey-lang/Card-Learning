@@ -25,7 +25,6 @@ const Cards: React.FC = () => {
 
     const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
 
-
     //request on start, data from redux
     useEffect(() => {
         dispatch(getCards(id))
@@ -83,7 +82,8 @@ const Cards: React.FC = () => {
             </div>
             <div className={s.search}>
                 <UniversalButton onClick={onSearch}>Search</UniversalButton>
-                <UniversalButton onClick={onAddCard}>Add Card</UniversalButton>
+                <UniversalButton onClick={onAddCard}>Add
+                    Card</UniversalButton>
             </div>
         </div>
         <ModalForAddCards active={activeModalAdd} setActive={setActiveModalAdd} addCardHandler={addCardHandler}

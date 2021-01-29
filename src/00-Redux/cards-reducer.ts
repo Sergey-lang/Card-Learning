@@ -142,7 +142,7 @@ export const sendGrade = (grade: number, card_id: string) => (dispatch: ThunkDis
     dispatch(setAppStatus({status: 'loading', error: null}))
     cardsAPI.sendGrade(grade, card_id)
         .then(res => {
-            dispatch(setAppStatus({status: 'succeeded', error: 'Отправлено'}))
+            dispatch(setAppStatus({status: 'succeeded', error: 'Sent'}))
             const cardID = res.data._id
             const grade = res.data.grade
             dispatch(setGrade(grade, cardID))

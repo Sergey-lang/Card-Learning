@@ -2,11 +2,13 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
     background-image: url("home_bg.jpg");
     background-position: center;
     background-size: cover; /*//для сохранеия пропорций*/
 }
 .App::before {
+    min-width: 100%;
     content: "";
     position: absolute;
     top: 0;
@@ -15,4 +17,5 @@
     left: 0;
     background-color: rgba(45, 64, 82, 0.5);
 }
+
 

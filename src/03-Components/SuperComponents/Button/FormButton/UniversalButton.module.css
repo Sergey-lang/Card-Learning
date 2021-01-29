@@ -13,5 +13,8 @@
     margin-top: 15px;
     width: 100%;
 }
+.default:disabled {
+    background-color: #a3b1bc;
+}
 
 

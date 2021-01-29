@@ -4,6 +4,8 @@ import s from './CardElement.module.css'
 import ModalForDelete from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForDelete';
 import ModalForUpdateCard from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForUpdateCard';
 import Button from '../../../03-Components/SuperComponents/Button/Button';
+import {useSelector} from 'react-redux';
+import {RootStateType} from '../../../04-App/store';
 
 type CardPropsType = {
     card: CardType
@@ -21,6 +23,9 @@ const CardElement: React.FC<CardPropsType> = (
     const [activeModalUpdate, setActiveModalUpdate] = useState<boolean>(false)
     const [questionCard, setQuestionCard] = useState<string>('')
     const [answerCard, setAnswerCard] = useState<string>('')
+
+    //for disabled
+    const userId = useSelector<RootStateType, string>(state => state.login.user._id)
 
     //for delete
     const deleteModalHandlerYes = () => {
@@ -54,9 +59,10 @@ const CardElement: React.FC<CardPropsType> = (
             <h5>{card.question ? card.question : 'empty question'}</h5>
             <p>{card.answer ? card.answer : 'empty answer'}</p>
             <p>type of card: {card.type ? card.type : 'empty type'} </p>
-            <p>grade: {card.grade}</p>
-            <Button onClick={onUpdateHandler}>Update</Button>
-            <Button onClick={onRemoveHandler}>Delete</Button>
+            <p>grade: </p>
+            <p>{card.grade}</p>
+            <Button onClick={onUpdateHandler} disabled={card.user_id !== userId}>Update</Button>
+            <Button onClick={onRemoveHandler} disabled={card.user_id !== userId}>Delete</Button>
 
             <ModalForDelete active={activeModalDelete} setActive={setActiveModalDelete}
                             deleteModalHandlerYes={deleteModalHandlerYes}/>

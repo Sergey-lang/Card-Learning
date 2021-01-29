@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {CardType} from '../../../00-Redux/cards-reducer';
-import s from './CardElement.module.css'
 import ModalForDelete from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForDelete';
 import ModalForUpdateCard from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForUpdateCard';
 import Button from '../../../03-Components/SuperComponents/Button/Button';
 import {useSelector} from 'react-redux';
-import {RootStateType} from '../../../04-App/store';
+
+import s from './CardElement.module.css'
+import {RootStateType} from '../../../00-Redux/store';
 
 type CardPropsType = {
     card: CardType
@@ -15,7 +16,9 @@ type CardPropsType = {
 
 const CardElement: React.FC<CardPropsType> = (
     {
-        card, updateCard, removeCard
+        card,
+        updateCard,
+        removeCard
     }) => {
 
     //for modal
@@ -64,11 +67,14 @@ const CardElement: React.FC<CardPropsType> = (
             <Button onClick={onUpdateHandler} disabled={card.user_id !== userId}>Update</Button>
             <Button onClick={onRemoveHandler} disabled={card.user_id !== userId}>Delete</Button>
 
-            <ModalForDelete active={activeModalDelete} setActive={setActiveModalDelete}
+            <ModalForDelete active={activeModalDelete}
+                            setActive={setActiveModalDelete}
                             deleteModalHandlerYes={deleteModalHandlerYes}/>
 
-            <ModalForUpdateCard active={activeModalUpdate} setActive={setActiveModalUpdate}
-                                setQuestionCard={setQuestionCard} setAnswerCard={setAnswerCard}
+            <ModalForUpdateCard active={activeModalUpdate}
+                                setActive={setActiveModalUpdate}
+                                setQuestionCard={setQuestionCard}
+                                setAnswerCard={setAnswerCard}
                                 updateModalHandler={updateModalHandler}/>
         </div>
     )

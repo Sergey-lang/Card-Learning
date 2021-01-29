@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {CardPacksType} from '../../../00-Redux/card-packs-reducer';
-import s from './CardPacksElement.module.css'
 import ModalForDeleteCardsPack from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForDelete';
 import ModalForUpdateCardsPack
     from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForUpdateCardsPack';
 import {path} from '../../../04-App/Routes/Routes';
 import Button from '../../../03-Components/SuperComponents/Button/Button';
 import {useSelector} from 'react-redux';
-import {RootStateType} from '../../../04-App/store';
+import {RootStateType} from '../../../00-Redux/store';
 
+import s from './CardPacksElement.module.css'
 
 type CardPropsType = {
     pack: CardPacksType

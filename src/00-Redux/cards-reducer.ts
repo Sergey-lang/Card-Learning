@@ -46,7 +46,7 @@ const initialState = {
 
 export type CardsInitialStateType = typeof initialState
 
-export const cardsReducer = (state = initialState, actions: ActionsType): CardsInitialStateType => {
+export const cardsReducer = (state: CardsInitialStateType = initialState, actions: ActionsType): CardsInitialStateType => {
     switch (actions.type) {
         case 'CARDS/CARDS/SET-FILTER':
             return {...state, filter: actions.payload.filter}
@@ -58,7 +58,8 @@ export const cardsReducer = (state = initialState, actions: ActionsType): CardsI
             return {
                 ...state,
                 cards: state.cards.map(
-                    (card, i) => card._id === actions.payload.id ? {...card, grade: actions.payload.grade}
+                    (card, i) => card._id === actions.payload.id
+                        ? {...card, grade: actions.payload.grade}
                         : card
                 )
             }

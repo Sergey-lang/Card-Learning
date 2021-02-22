@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootStateType} from '../../00-Redux/store';
+import {RootStateType} from '../../04-App/store';
 import s from './Cards.module.css'
-import {addCard, CardType, deleteCard, getCards, updateCard} from '../../00-Redux/cards-reducer';
+import {addCard, CardType, deleteCard, getCards, updateCard} from './cards-reducer';
 import {Redirect, useParams} from 'react-router-dom';
 import CardElement from './CardElement/CardElement';
 import ModalForAddCards from '../../03-Components/SuperComponents/Modal/ModalForCards/ModalForAddCard';
-import {path} from '../../04-App/Routes/Routes';
+import {PATH} from '../../04-App/Routes/Routes';
 import UniversalButton from '../../03-Components/SuperComponents/Button/FormButton/UniversalButton';
+import {authSelectors} from '../01-Login/00-index';
 
 
 const Cards: React.FC = () => {
@@ -23,7 +24,7 @@ const Cards: React.FC = () => {
     const [newAnswerCard, setNewAnswerCard] = useState<string>('')
     const [typeNewCard, setTypeNewCard] = useState<string>('undefined')
 
-    const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
+    const isAuth = useSelector<RootStateType, boolean>(authSelectors.selectorIsAuth)
 
     //request on start, data from redux
     useEffect(() => {
@@ -65,7 +66,7 @@ const Cards: React.FC = () => {
         dispatch(deleteCard(id))
     }
 
-    if (!isAuth) return <Redirect to={path.LOGIN}/>
+    if (!isAuth) return <Redirect to={PATH.LOGIN}/>
     const mappedCards = cards.map((card: CardType) => <CardElement key={card._id}
                                                                    card={card}
                                                                    updateCard={changeCard}

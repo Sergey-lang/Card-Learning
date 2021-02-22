@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
-import {RootStateType} from '../../00-Redux/store';
+import {RootStateType} from '../../04-App/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, useParams} from 'react-router-dom';
 import {SendingForm} from '../../03-Components/SuperComponents/SendingForm/SendingForm';
-import {resetPassword} from '../../00-Redux/resetPassword-thunks';
-import {setAppStatus} from '../../00-Redux/appState-reducer';
-import {path} from '../../04-App/Routes/Routes';
+import {resetPassword} from './resetPassword-thunks';
+import {PATH} from '../../04-App/Routes/Routes';
 import stylesContainer from '../../assets/css/container.module.css';
+import {setAppStatus} from '../../04-App/app-reducer';
 
 export const ResetPassword: React.FC = () => {
 
@@ -16,7 +16,6 @@ export const ResetPassword: React.FC = () => {
 
     const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
 
-
     const tokenName = token ? token : ''
 
     const resetOldPassword = (password: string) => {
@@ -25,7 +24,7 @@ export const ResetPassword: React.FC = () => {
     }
 
     const redirect = () => {
-        history.push(path.LOGIN);
+        history.push(PATH.LOGIN);
     }
 
     //redirect
@@ -50,7 +49,7 @@ export const ResetPassword: React.FC = () => {
                          inputType={'password'}
                          buttonName={'Reset'}
                          btnDisabled={appStatus === 'loading'}
-                         navLinkPath={path.LOGIN}
+                         navLinkPath={PATH.LOGIN}
             />
         </div>
     )

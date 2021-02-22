@@ -1,4 +1,4 @@
-import {RegistrationRequestType, RegistrationResponseType} from '../00-Redux/registration-reducer';
+import {RegistrationRequestType, RegistrationResponseType} from '../02-Features/02-Registration/registration-reducer';
 import {instance} from './api';
 
 export const registrationAPI = () => {

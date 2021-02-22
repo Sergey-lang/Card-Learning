@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import style from '../../assets/css/dataForm.module.css'
@@ -11,28 +11,39 @@ import {
     getCardPacks,
     showMode,
     updateCardPacks
-} from '../../00-Redux/card-packs-reducer';
-import {RootStateType} from '../../00-Redux/store';
+} from '../05-CardPacks/cardPacks-reducer';
+import {RootStateType} from '../../04-App/store';
 import CardPacksElement from './CardPaksElement/CardPacksElement';
 import {Paginator} from '../../03-Components/Paginator/Paginator';
 import DoubleRange from '../../03-Components/SuperComponents/DoubleRange/DoubleRange';
-import {path} from '../../04-App/Routes/Routes';
+import {PATH} from '../../04-App/Routes/Routes';
 import UniversalInputText from '../../03-Components/SuperComponents/InputText/UniversalInputText';
 import UniversalCheckbox from '../../03-Components/SuperComponents/DoubleRange/Checkbox/UniversalCheckbox';
 import UniversalButton from '../../03-Components/SuperComponents/Button/FormButton/UniversalButton';
 import ModalForAddPack from '../../03-Components/SuperComponents/Modal/ModalForPack/ModalForAddPack';
+import {authSelectors} from '../01-Login/00-index';
+import {
+    selectorCardPacks,
+    selectorCurrentPage, selectorEditMode,
+    selectorFilter,
+    selectorPacksTotalCount,
+    selectorPageSize
+} from './01-selectors';
+import {UserDataType} from '../01-Login/auth-reducer';
+import {selectorUserData} from '../01-Login/01-selectors';
 
 const CardPacks: React.FC = () => {
-    const isAuth = useSelector<RootStateType, boolean>(state => state.login.isAuth)
-    const cardPacks = useSelector<RootStateType, CardPacksType[]>(state => state.cardsPack.cardPacks)
+    const isAuth = useSelector<RootStateType, boolean>(authSelectors.selectorIsAuth)
+    const cardPacks = useSelector<RootStateType, CardPacksType[]>(selectorCardPacks)
 
     //filter data
-    const packsTotalCount = useSelector<RootStateType, number>(state => state.cardsPack.packsTotalCount)
-    const filter = useSelector<RootStateType, CardPacksFilterType>(state => state.cardsPack.filter)
-    const currentPage = useSelector<RootStateType, number>(state => state.cardsPack.currentPage)
-    const pageSize = useSelector<RootStateType, number>(state => state.cardsPack.pageSize)
-    const userId = useSelector<RootStateType, string>(state => state.login.user._id)
-    const showEditMode = useSelector<RootStateType, boolean>(state => state.cardsPack.showAll)
+    const packsTotalCount = useSelector<RootStateType, number>(selectorPacksTotalCount)
+    const filter = useSelector<RootStateType, CardPacksFilterType>(selectorFilter)
+    const currentPage = useSelector<RootStateType, number>(selectorCurrentPage)
+    const pageSize = useSelector<RootStateType, number>(selectorPageSize)
+    const editMode = useSelector<RootStateType, boolean>(selectorEditMode)
+
+    const userData = useSelector<RootStateType, UserDataType | null>(selectorUserData)
 
     //filter state
     const [inputValue, setInputValue] = useState<string>('')
@@ -46,50 +57,31 @@ const CardPacks: React.FC = () => {
 
     const dispatch = useDispatch()
 
-    //get all packs
-    useEffect(() => {
-        dispatch(getCardPacks(currentPage, pageSize, filter))
-    }, [])
-
-    //pagination
-    const onPageChanged = (currentPage: number) => {
+    const onPageChanged = useCallback((currentPage: number) => {
         dispatch(getCardPacks(currentPage, pageSize, filtered))
-    }
+    }, [currentPage])
 
-    //search request
-    const onSearch = () => {
-        dispatch(getCardPacks(currentPage, pageSize, filtered))
-    }
-
-    //checkbox showMode
-    const showOwnPack = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(showMode(e.target.checked))
-    }
-
-    //set input field value
+    const onSearch = () => dispatch(getCardPacks(currentPage, pageSize, filtered))
+    const showOwnPack = (e: ChangeEvent<HTMLInputElement>) => dispatch(showMode(e.target.checked))
     const inputHandler = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value)
 
-    //filter object
-    let filtered: CardPacksFilterType = {
+    const filtered: CardPacksFilterType = {
         packName: inputValue,
         min: range[0],
         max: range[1],
-        userId: showEditMode ? userId : ''
+        userId: editMode && userData ? userData._id : ''
     }
 
-    //generate random id for adding pack
     function genID(serverNum: number) {
         return (serverNum + '' + (new Date).getTime());
     }
 
-    //fake obj for adding pack
     const cardTestObj: CardPacksType = {
-        '_id': genID(5),
+        _id: genID(5),
         name: namePack,
         type: typeNewPack
     }
 
-    //button action
     const onAddCardPacks = () => {
         setActiveModalAdd(true)
     }
@@ -110,7 +102,13 @@ const CardPacks: React.FC = () => {
                           updateCardPacks={changeCardPacks}
                           removeCardPacks={removeCardPacks}/>)
 
-    if (!isAuth) return <Redirect to={path.LOGIN}/>
+    useEffect(() => {
+        dispatch(getCardPacks(currentPage, pageSize, filter))
+    }, [])
+
+    if (!isAuth) {
+        return <Redirect to={PATH.LOGIN}/>
+    }
 
     return (<>
             <div className={style.dataForm}>
@@ -119,7 +117,7 @@ const CardPacks: React.FC = () => {
                     <DoubleRange range={range} setRange={setRange}/>
                     <UniversalInputText onChange={inputHandler} placeholder={'search...'}/>
                     <UniversalCheckbox
-                        checked={showEditMode}
+                        checked={true}//!!!!!!
                         onChange={showOwnPack}>
                         Show only mine pack
                     </UniversalCheckbox>

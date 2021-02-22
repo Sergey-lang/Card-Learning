@@ -1,5 +1,5 @@
 import {instance} from './api';
-import {CardPacksType} from '../00-Redux/card-packs-reducer';
+import {CardPacksType} from '../02-Features/05-CardPacks/cardPacks-reducer';
 
 export const cardPacksAPI = {
     getCardPacks(page: number, pageCount: number, packName: string = '', min: number, max: number, user_id: string) {

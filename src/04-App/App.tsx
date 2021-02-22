@@ -1,22 +1,25 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootStateType} from '../00-Redux/store';
+import {RootStateType} from './store';
 import ProgressBar from '../03-Components/SuperComponents/ProgressBar/ProgressBar';
-import {authUser} from '../00-Redux/login-reducer';
+import {getAuthUserData} from '../02-Features/01-Login/auth-reducer';
 import Header from '../02-Features/00-Header/Header';
 import Routes from './Routes/Routes';
 import ErrorSnackBar from '../03-Components/ErrorSnackBar/ErrorSnackBar';
 
 import './App.css';
+import {appSelectors} from './00-index';
 
 const App: React.FC = () => {
 
-    const error = useSelector<RootStateType, string | null>((state) => state.app.appState.error)
-    const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
-    const dispatch = useDispatch()
+    const appStatus = useSelector<RootStateType, string>(appSelectors.selectorAppStatus)
+    // const finalStyle = appStatus === 'loading' ? `${s.fullOverlay} ${s.activeFullOverlay}` : s.fullOverlay
 
+    const error = useSelector<RootStateType, string | null>(appSelectors.selectorError)
+
+    const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(authUser())
+        dispatch(getAuthUserData())
     }, []);
 
     return <div className='App'>

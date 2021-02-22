@@ -1,5 +1,5 @@
 import {instance} from './api';
-import {CardType} from '../00-Redux/cards-reducer';
+import {CardType} from '../02-Features/06-Cards/cards-reducer';
 
 export const cardsAPI = {
     getCards(id: string) {

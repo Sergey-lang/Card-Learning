@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {RootStateType} from '../../00-Redux/store';
-import {setAppStatus} from '../../00-Redux/appState-reducer';
+import {RootStateType} from '../../04-App/store';
 
 import s from './ErrorSnackBar.module.css'
+import {setAppStatus} from '../../04-App/app-reducer';
 
 type ErrorBarPropsType = {
     errorMessage: string

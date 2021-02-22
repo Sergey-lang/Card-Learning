@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux';
-import {registrationAPI} from '../01-API/01-regestration-api';
-import {setAppStatus} from './appState-reducer';
+import {registrationAPI} from '../../01-API/01-regestration-api';
+import {setAppStatus} from '../../04-App/app-reducer';
 
 type ActionsType = ReturnType<typeof setRegistrationAC>
     | ReturnType<typeof setRedirectProfileAC>

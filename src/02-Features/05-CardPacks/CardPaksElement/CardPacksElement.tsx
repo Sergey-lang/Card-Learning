@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 import {NavLink} from 'react-router-dom';
-import {CardPacksType} from '../../../00-Redux/card-packs-reducer';
 import ModalForDeleteCardsPack from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForDelete';
 import ModalForUpdateCardsPack
     from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForUpdateCardsPack';
-import {path} from '../../../04-App/Routes/Routes';
+import {PATH} from '../../../04-App/Routes/Routes';
 import Button from '../../../03-Components/SuperComponents/Button/Button';
 import {useSelector} from 'react-redux';
-import {RootStateType} from '../../../00-Redux/store';
-
+import {RootStateType} from '../../../04-App/store';
 import s from './CardPacksElement.module.css'
+import {CardPacksType} from '../cardPacks-reducer';
 
 type CardPropsType = {
     pack: CardPacksType
@@ -47,7 +46,7 @@ const CardPacksElement: React.FC<CardPropsType> = (
         setTitleCard('')
     }
     //for disabled
-    const userId = useSelector<RootStateType, string>(state => state.login.user._id)
+    const userId = useSelector<RootStateType, string>(state => state.auth.user._id)
 
     return (<>
             <tr>
@@ -56,9 +55,9 @@ const CardPacksElement: React.FC<CardPropsType> = (
                 <td><Button onClick={onUpdateHandler} disabled={pack.user_id !== userId}>Update</Button></td>
                 <td><Button onClick={onRemoveHandler} disabled={pack.user_id !== userId}>Delete</Button></td>
                 <td><NavLink className={s.inactive} activeClassName={s.active}
-                             to={path.LEARNING + '/' + pack._id}>Learn</NavLink></td>
+                             to={PATH.LEARNING + '/' + pack._id}>Learn</NavLink></td>
                 <td><NavLink className={s.inactive} activeClassName={s.active}
-                             to={path.CARDS + '/' + pack._id}>Cards</NavLink></td>
+                             to={PATH.CARDS + '/' + pack._id}>Cards</NavLink></td>
             </tr>
             <ModalForDeleteCardsPack active={activeModalDelete} setActive={setActiveModalDelete}
                                      deleteModalHandlerYes={deleteModalHandlerYes}/>

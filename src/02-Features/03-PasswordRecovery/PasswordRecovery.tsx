@@ -1,23 +1,23 @@
 import React, {useEffect} from 'react';
-import {RootStateType} from '../../00-Redux/store';
+import {RootStateType} from '../../04-App/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {SendingForm} from '../../03-Components/SuperComponents/SendingForm/SendingForm';
-import {sendRecoveryEmail} from '../../00-Redux/resetPassword-thunks';
-import {setAppStatus} from '../../00-Redux/appState-reducer';
-import {path} from '../../04-App/Routes/Routes';
+import {sendRecoveryEmail} from './resetPassword-thunks';
+import {PATH} from '../../04-App/Routes/Routes';
 import stylesContainer from '../../assets/css/container.module.css';
+import {setAppStatus} from '../../04-App/app-reducer';
+import {appSelectors} from '../../04-App/00-index';
 
 export const PasswordRecovery: React.FC = () => {
 
-    const dispatch = useDispatch()
-    const appStatus = useSelector<RootStateType, string>((state) => state.app.appState.status)
+    const appStatus = useSelector<RootStateType, string>(appSelectors.selectorAppStatus)
+
     const sendEmail = (email: string) => {
         dispatch(sendRecoveryEmail(email))
     }
 
-    //clear status
+    const dispatch = useDispatch()
     useEffect(() => {
-
         return () => {
             dispatch(setAppStatus({status: 'idle', error: null}))
         }
@@ -32,7 +32,7 @@ export const PasswordRecovery: React.FC = () => {
                          inputType={'email'}
                          buttonName={'Send'}
                          btnDisabled={appStatus === 'loading'}
-                         navLinkPath={path.LOGIN}
+                         navLinkPath={PATH.LOGIN}
             />
         </div>
     )

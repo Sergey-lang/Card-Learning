@@ -1,9 +1,9 @@
 import React, {ChangeEvent, useCallback, useState} from 'react';
 import {NavLink, Redirect} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootStateType} from '../../00-Redux/store';
-import {registrationTC} from '../../00-Redux/registration-reducer';
-import {path} from '../../04-App/Routes/Routes';
+import {RootStateType} from '../../04-App/store';
+import {registrationTC} from './registration-reducer';
+import {PATH} from '../../04-App/Routes/Routes';
 import UniversalInputText from '../../03-Components/SuperComponents/InputText/UniversalInputText';
 import UniversalButton from '../../03-Components/SuperComponents/Button/FormButton/UniversalButton';
 import stylesContainer from '../../assets/css/container.module.css';
@@ -26,7 +26,7 @@ const Registration: React.FC = () => {
     const onClickHandler = () => (dispatch(registrationTC({email, password})))
 
     if (isRedirectProfile) {
-        return <Redirect to={path.LOGIN}/>
+        return <Redirect to={PATH.LOGIN}/>
     }
 
     return <div className={stylesContainer.container}>
@@ -44,7 +44,7 @@ const Registration: React.FC = () => {
             <UniversalButton onClick={onClickHandler}
                              disabled={appStatus === 'loading'}> SIGN UP </UniversalButton>
             <hr/>
-            <p>Already registered? <NavLink to={path.LOGIN}
+            <p>Already registered? <NavLink to={PATH.LOGIN}
                                             activeClassName={stylesContainer.activeLink}
                                             className={s.inactive}>Sign in to your account.</NavLink></p>
         </div>

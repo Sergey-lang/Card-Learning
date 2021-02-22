@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {CardType} from '../../../00-Redux/cards-reducer';
+import {CardType} from '../cards-reducer';
 import ModalForDelete from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForDelete';
 import ModalForUpdateCard from '../../../03-Components/SuperComponents/Modal/ModalForCards/ModalForUpdateCard';
 import Button from '../../../03-Components/SuperComponents/Button/Button';
 import {useSelector} from 'react-redux';
 
 import s from './CardElement.module.css'
-import {RootStateType} from '../../../00-Redux/store';
+import {RootStateType} from '../../../04-App/store';
+import {authSelectors} from '../../01-Login/00-index';
 
 type CardPropsType = {
     card: CardType
@@ -28,7 +29,7 @@ const CardElement: React.FC<CardPropsType> = (
     const [answerCard, setAnswerCard] = useState<string>('')
 
     //for disabled
-    const userId = useSelector<RootStateType, string>(state => state.login.user._id)
+    const userId = useSelector<RootStateType, string>(authSelectors.selectorUserId)
 
     //for delete
     const deleteModalHandlerYes = () => {

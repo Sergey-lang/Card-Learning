@@ -1,5 +1,5 @@
-# Friday Command Project
+# Card Learning
 
 in the development...
 
-[GH page Link](https://sergey-lang.github.io/Friday-2021/).
+[GH page Link](https://sergey-lang.github.io/Card-Learning/).

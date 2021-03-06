@@ -2,7 +2,6 @@
     width: 100%;
     display: flex;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    z-index: 1030;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;

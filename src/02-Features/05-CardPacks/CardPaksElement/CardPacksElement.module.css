@@ -20,3 +20,11 @@ tr {
     line-height: 20px;
     font-weight: 700;
 }
+@media only screen and (max-width: 470px) {
+   tr a {
+        font-size: 10px;
+        line-height: 10px;
+        font-weight: 400;
+        padding: 5px;
+    }
+}

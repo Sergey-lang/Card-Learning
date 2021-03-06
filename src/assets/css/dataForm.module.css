@@ -1,7 +1,6 @@
 .dataForm {
     display: flex;
-    z-index: 100;
-    width: 90%;
+    width: 85%;
     background-color: #fff;
     align-items: center;
     padding: 30px;
@@ -10,5 +9,6 @@
     border-radius: 6px;
     box-shadow: 0 5px 15px rgb(0 0 50%);
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 

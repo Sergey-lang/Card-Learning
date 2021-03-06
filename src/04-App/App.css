@@ -1,20 +1,30 @@
 .App {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: url("../assets/images/home_bg.jpg");
-    background-position: center;
-    background-size: cover;
+    position: relative;
+    background-color: transparent;
 }
 .App::before {
-    min-width: 100%;
     content: "";
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: -1;
     background-color: rgba(45, 64, 82, 0.5);
 }
+
+.App::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -2;
+    background-image: url("../assets/images/home_bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
 

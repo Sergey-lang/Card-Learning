@@ -1,13 +1,13 @@
 .search {
     display: flex;
-    min-height: 70%;
-    width: 30%;
+    flex: 1;
     justify-content: space-evenly;
     padding: 15px;
     flex-wrap: wrap;
     box-shadow: 0 1px 5px rgba(5, 5, 6, 0.15);
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
+    margin: 10px;
 }
 
 .paginator {
@@ -16,7 +16,7 @@
 }
 
 .cards {
-    width: 60%;
+    flex: 2;
     padding: 15px;
     flex-wrap: wrap;
 }
@@ -59,3 +59,6 @@
     padding: 16px;
 }
 
+td {
+    padding-left: 15px;
+}

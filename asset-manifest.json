@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/Card-Learning/static/css/main.9626ed12.chunk.css",
-    "main.js": "/Card-Learning/static/js/main.629d9f42.chunk.js",
-    "main.js.map": "/Card-Learning/static/js/main.629d9f42.chunk.js.map",
-    "runtime-main.js": "/Card-Learning/static/js/runtime-main.65e3fe66.js",
-    "runtime-main.js.map": "/Card-Learning/static/js/runtime-main.65e3fe66.js.map",
-    "static/js/2.41ce8011.chunk.js": "/Card-Learning/static/js/2.41ce8011.chunk.js",
-    "static/js/2.41ce8011.chunk.js.map": "/Card-Learning/static/js/2.41ce8011.chunk.js.map",
-    "static/js/3.4cd23957.chunk.js": "/Card-Learning/static/js/3.4cd23957.chunk.js",
-    "static/js/3.4cd23957.chunk.js.map": "/Card-Learning/static/js/3.4cd23957.chunk.js.map",
+    "main.css": "/Card-Learning/static/css/main.89bee134.chunk.css",
+    "main.js": "/Card-Learning/static/js/main.c960d2cf.chunk.js",
+    "main.js.map": "/Card-Learning/static/js/main.c960d2cf.chunk.js.map",
+    "runtime-main.js": "/Card-Learning/static/js/runtime-main.1bd60109.js",
+    "runtime-main.js.map": "/Card-Learning/static/js/runtime-main.1bd60109.js.map",
+    "static/js/2.386bc65a.chunk.js": "/Card-Learning/static/js/2.386bc65a.chunk.js",
+    "static/js/2.386bc65a.chunk.js.map": "/Card-Learning/static/js/2.386bc65a.chunk.js.map",
+    "static/js/3.13b008c1.chunk.js": "/Card-Learning/static/js/3.13b008c1.chunk.js",
+    "static/js/3.13b008c1.chunk.js.map": "/Card-Learning/static/js/3.13b008c1.chunk.js.map",
     "index.html": "/Card-Learning/index.html",
-    "static/css/main.9626ed12.chunk.css.map": "/Card-Learning/static/css/main.9626ed12.chunk.css.map",
-    "static/js/2.41ce8011.chunk.js.LICENSE.txt": "/Card-Learning/static/js/2.41ce8011.chunk.js.LICENSE.txt",
+    "static/css/main.89bee134.chunk.css.map": "/Card-Learning/static/css/main.89bee134.chunk.css.map",
+    "static/js/2.386bc65a.chunk.js.LICENSE.txt": "/Card-Learning/static/js/2.386bc65a.chunk.js.LICENSE.txt",
     "static/media/Error404.module.css": "/Card-Learning/static/media/404page_bg.f9c13840.jpg",
     "static/media/App.css": "/Card-Learning/static/media/home_bg.55cfce7e.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.65e3fe66.js",
-    "static/js/2.41ce8011.chunk.js",
-    "static/css/main.9626ed12.chunk.css",
-    "static/js/main.629d9f42.chunk.js"
+    "static/js/runtime-main.1bd60109.js",
+    "static/js/2.386bc65a.chunk.js",
+    "static/css/main.89bee134.chunk.css",
+    "static/js/main.c960d2cf.chunk.js"
   ]
 }
